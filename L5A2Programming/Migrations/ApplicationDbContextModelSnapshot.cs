@@ -87,6 +87,26 @@ namespace L5A2Programming.Migrations
                         .HasDatabaseName("UserNameIndex");
 
                     b.ToTable("AspNetUsers", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "143d3180-1104-46f0-8646-62d630056f42",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "231728ec-ceef-4de5-8c95-7f82a488cc0d",
+                            Email = "admin@admin.com",
+                            EmailConfirmed = false,
+                            FName = "Admin",
+                            LockoutEnabled = false,
+                            NormalizedEmail = "ADMIN@ADMIN.COM",
+                            NormalizedUserName = "ADMIN@ADMIN.COM",
+                            PasswordHash = "AQAAAAEAACcQAAAAEEEGKoqlkzcj/YpOcj6IMl1im+iaL2tJEP/dtv462ozhHI5/GCzv6VI2nH5P3vImLg==",
+                            PhoneNumberConfirmed = false,
+                            SName = "Admin",
+                            SecurityStamp = "bddad282-5daa-4080-a4f5-c999054a4f4a",
+                            TwoFactorEnabled = false,
+                            UserName = "admin@admin.com"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -113,6 +133,22 @@ namespace L5A2Programming.Migrations
                         .HasDatabaseName("RoleNameIndex");
 
                     b.ToTable("AspNetRoles", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "78bf8cbe-1f70-4d6d-890b-247bc57e6150",
+                            ConcurrencyStamp = "231728ec-ceef-4de5-8c95-7f82a488cc0d",
+                            Name = "Admin",
+                            NormalizedName = "ADMIN"
+                        },
+                        new
+                        {
+                            Id = "ecfbe7ad-bb6b-49e6-ac2b-6359a73fbf02",
+                            ConcurrencyStamp = "68144efc-092a-403e-a7fe-3c276de06a72",
+                            Name = "Institution manager",
+                            NormalizedName = "CUSTOMER"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -138,7 +174,7 @@ namespace L5A2Programming.Migrations
                     b.ToTable("AspNetRoleClaims", (string)null);
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.CustomUserModelClaim<string>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -161,7 +197,7 @@ namespace L5A2Programming.Migrations
                     b.ToTable("AspNetUserClaims", (string)null);
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.CustomUserModelLogin<string>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
                     b.Property<string>("LoginProvider")
                         .HasColumnType("TEXT");
@@ -183,7 +219,7 @@ namespace L5A2Programming.Migrations
                     b.ToTable("AspNetUserLogins", (string)null);
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.CustomUserModelRole<string>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<string>", b =>
                 {
                     b.Property<string>("UserId")
                         .HasColumnType("TEXT");
@@ -196,9 +232,16 @@ namespace L5A2Programming.Migrations
                     b.HasIndex("RoleId");
 
                     b.ToTable("AspNetUserRoles", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            UserId = "143d3180-1104-46f0-8646-62d630056f42",
+                            RoleId = "78bf8cbe-1f70-4d6d-890b-247bc57e6150"
+                        });
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.CustomUserModelToken<string>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
                 {
                     b.Property<string>("UserId")
                         .HasColumnType("TEXT");
@@ -226,7 +269,7 @@ namespace L5A2Programming.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.CustomUserModelClaim<string>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
                 {
                     b.HasOne("L5A2Programming.Models.CustomUserModel", null)
                         .WithMany()
@@ -235,7 +278,7 @@ namespace L5A2Programming.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.CustomUserModelLogin<string>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
                     b.HasOne("L5A2Programming.Models.CustomUserModel", null)
                         .WithMany()
@@ -244,7 +287,7 @@ namespace L5A2Programming.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.CustomUserModelRole<string>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
                         .WithMany()
@@ -259,7 +302,7 @@ namespace L5A2Programming.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.CustomUserModelToken<string>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
                 {
                     b.HasOne("L5A2Programming.Models.CustomUserModel", null)
                         .WithMany()

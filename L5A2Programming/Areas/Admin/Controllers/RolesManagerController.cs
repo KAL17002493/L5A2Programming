@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 
 namespace L5A2Programming.Areas.Admin.Controllers
 {
+    [Authorize(Roles = "Admin")]
+    [Area("Admin")]
     public class RolesManagerController : Controller
     {
         private readonly RoleManager<IdentityRole> _roleManager;
@@ -42,5 +44,7 @@ namespace L5A2Programming.Areas.Admin.Controllers
             }
             return RedirectToAction("Index");
         }
+
+
     }
 }

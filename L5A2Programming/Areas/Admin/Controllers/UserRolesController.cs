@@ -4,12 +4,12 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using L5A2Programming.Areas.Admin.Models;
 using L5A2Programming.Models;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+
 
 namespace L5A2Programming.Areas.Admin.Controllers
 {
+    [Authorize(Roles = "Admin")]
+    [Area("Admin")]
     public class UserRolesController : Controller
     {
         private readonly RoleManager<IdentityRole> _roleManager;
