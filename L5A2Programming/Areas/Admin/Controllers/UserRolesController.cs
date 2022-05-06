@@ -36,7 +36,6 @@ namespace L5A2Programming.Areas.Admin.Controllers
             return View(VMlist);
         }
 
-
         public async Task<IActionResult> Delete(string id)
         {
             var user = await _userManager.FindByIdAsync(id);

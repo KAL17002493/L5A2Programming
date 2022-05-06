@@ -8,7 +8,6 @@ namespace L5A2Programming.Data
     public class ApplicationDbContext : IdentityDbContext<CustomUserModel>
     {
 
-
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
         {
         }
