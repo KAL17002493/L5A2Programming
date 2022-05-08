@@ -8,6 +8,10 @@ namespace L5A2Programming.Data
     public class ApplicationDbContext : IdentityDbContext<CustomUserModel>
     {
 
+        public DbSet<AssetModel> Assets { get; set; }
+        public DbSet<CategoryModel> Categories { get; set; }
+        public DbSet<InstitutionModel> Institutions { get; set; }
+
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
         {
         }
