@@ -21,7 +21,7 @@ namespace L5A2Programming.Areas.Admin
         }
         public async Task<IActionResult> Index()
         {
-            var assets = await _db.Assets.ToListAsync();
+            var assets = await _db.Assets/*.Include("Categories")*/.ToListAsync();
             return View(assets);
         }
 
@@ -34,7 +34,7 @@ namespace L5A2Programming.Areas.Admin
                 {
                     Text = i.Name,
                     Value = i.Id.ToString()
-                }),
+                })
             };
             return View(assetViewModel);
         }
