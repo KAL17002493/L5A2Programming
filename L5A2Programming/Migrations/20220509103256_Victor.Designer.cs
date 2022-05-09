@@ -3,6 +3,7 @@ using System;
 using L5A2Programming.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace L5A2Programming.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220509103256_Victor")]
+    partial class Victor
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "6.0.4");
@@ -30,9 +32,14 @@ namespace L5A2Programming.Migrations
                     b.Property<int>("CategoryId")
                         .HasColumnType("INTEGER");
 
+                    b.Property<int>("InstitutionId")
+                        .HasColumnType("INTEGER");
+
                     b.HasKey("Id");
 
                     b.HasIndex("CategoryId");
+
+                    b.HasIndex("InstitutionId");
 
                     b.ToTable("Assets");
                 });
@@ -135,10 +142,10 @@ namespace L5A2Programming.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@ADMIN.COM",
                             NormalizedUserName = "ADMIN@ADMIN.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAELFk2gCzXwDD/GRvAfQ3TLMOloV2RkXfJcrLzcyF8phN70Zbjda0GBgfZWMpBBEqoA==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEB/6ipkW844+rSKEw7Mk6b8C6NQWz5YW/ZklhlxdEUpsreQfv/qlOjyJ4LvjQ5DUlA==",
                             PhoneNumberConfirmed = false,
                             SName = "Admin",
-                            SecurityStamp = "0017cc60-7e3b-4ca6-811d-30098f671be9",
+                            SecurityStamp = "4734d103-92f1-4269-a49c-9a43cfb93f24",
                             TwoFactorEnabled = false,
                             UserName = "admin@admin.com"
                         });
@@ -311,7 +318,15 @@ namespace L5A2Programming.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("L5A2Programming.Models.InstitutionModel", "Institution")
+                        .WithMany()
+                        .HasForeignKey("InstitutionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.Navigation("Category");
+
+                    b.Navigation("Institution");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

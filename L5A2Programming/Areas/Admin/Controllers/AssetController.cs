@@ -21,8 +21,9 @@ namespace L5A2Programming.Areas.Admin
         }
         public async Task<IActionResult> Index()
         {
-            var assets = await _db.Assets/*.Include("Categories")*/.ToListAsync();
+            var assets = await _db.Assets.ToListAsync();
             return View(assets);
+            /*.Include("Categories")*/
         }
 
 
