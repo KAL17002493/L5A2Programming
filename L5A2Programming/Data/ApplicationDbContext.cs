@@ -11,6 +11,7 @@ namespace L5A2Programming.Data
         public DbSet<AssetModel> Assets { get; set; }
         public DbSet<CategoryModel> Categories { get; set; }
         public DbSet<InstitutionModel> Institutions { get; set; }
+        public DbSet<IssueModel> Issue { get; set; }
 
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
         {
