@@ -21,9 +21,9 @@ namespace L5A2Programming.Areas.Admin
         }
         public async Task<IActionResult> Index()
         {
-            var assets = await _db.Assets.ToListAsync();
+            var assets = await _db.Assets.Include("Category").Include("Institution").ToListAsync();
             return View(assets);
-            /*.Include("Categories")*/
+
         }
 
 
@@ -32,6 +32,12 @@ namespace L5A2Programming.Areas.Admin
             AssetViewModel assetViewModel = new AssetViewModel()
             {
                 Categories = _db.Categories.Select(i => new SelectListItem
+                {
+                    Text = i.Name,
+                    Value = i.Id.ToString()
+                }),
+
+                Institution = _db.Institutions.Select(i => new SelectListItem
                 {
                     Text = i.Name,
                     Value = i.Id.ToString()

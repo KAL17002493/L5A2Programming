@@ -30,9 +30,14 @@ namespace L5A2Programming.Migrations
                     b.Property<int>("CategoryId")
                         .HasColumnType("INTEGER");
 
+                    b.Property<int>("InstitutionId")
+                        .HasColumnType("INTEGER");
+
                     b.HasKey("Id");
 
                     b.HasIndex("CategoryId");
+
+                    b.HasIndex("InstitutionId");
 
                     b.ToTable("Assets");
                 });
@@ -135,10 +140,10 @@ namespace L5A2Programming.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@ADMIN.COM",
                             NormalizedUserName = "ADMIN@ADMIN.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAEMv+oOlOG7O8jg8/QPqgVt+FqZLeKvLYfFMa1fhCXSQZSol5FPHXde+yk/RGcC8WuA==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEEZlHrZ0Z7EiR6XQvq6m1lDh2jidyHmIkAa1wQk3KdjobywesbSA5FHY8Gyj6aQbMA==",
                             PhoneNumberConfirmed = false,
                             SName = "Admin",
-                            SecurityStamp = "69f9c0b7-daec-4300-b0e1-9b567e273c27",
+                            SecurityStamp = "9a271f2e-59ea-444d-a252-621b2c565137",
                             TwoFactorEnabled = false,
                             UserName = "admin@admin.com"
                         });
@@ -369,7 +374,15 @@ namespace L5A2Programming.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("L5A2Programming.Models.InstitutionModel", "Institution")
+                        .WithMany()
+                        .HasForeignKey("InstitutionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.Navigation("Category");
+
+                    b.Navigation("Institution");
                 });
 
             modelBuilder.Entity("L5A2Programming.Models.IssueModel", b =>

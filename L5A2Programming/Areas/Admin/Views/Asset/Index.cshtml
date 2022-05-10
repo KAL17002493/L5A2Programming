@@ -14,6 +14,8 @@
         <tr>
             <th scope="col">#</th>
             <th scope="col">Asset Name</th>
+            <th scope="col">Category</th>
+            <th scope="col">Institution</th>
             <th scope="col">Actions</th>
         </tr>
     </thead>
@@ -24,6 +26,9 @@
             <tr>
                 <th scope="row">@asset.Id</th>
                 <td>@asset.AssetName</td>
+                <td>@asset.Category.Name</td>
+
+                <td>@asset.Institution.Name</td>
                 <td>
                     <a class="btn btn-secondary" asp-controller="Asset" asp-action="Update" asp-route-id="@asset.Id">Edit</a>
                     <a class="btn btn-danger" asp-controller="Asset" asp-action="Delete" asp-route-id="@asset.Id">Delete</a>

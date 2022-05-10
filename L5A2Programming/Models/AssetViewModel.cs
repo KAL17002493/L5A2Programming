@@ -6,5 +6,7 @@ namespace L5A2Programming.Models
     {
         public AssetModel Asset { get; set; }
         public IEnumerable<SelectListItem> Categories { get; set; }
+
+        public IEnumerable<SelectListItem> Institution { get; set; }
     }
 }

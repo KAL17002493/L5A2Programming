@@ -211,7 +211,8 @@ namespace L5A2Programming.Migrations
                     Id = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
                     AssetName = table.Column<string>(type: "TEXT", nullable: false),
-                    CategoryId = table.Column<int>(type: "INTEGER", nullable: false)
+                    CategoryId = table.Column<int>(type: "INTEGER", nullable: false),
+                    InstitutionId = table.Column<int>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -220,6 +221,12 @@ namespace L5A2Programming.Migrations
                         name: "FK_Assets_Categories_CategoryId",
                         column: x => x.CategoryId,
                         principalTable: "Categories",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Assets_Institutions_InstitutionId",
+                        column: x => x.InstitutionId,
+                        principalTable: "Institutions",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -252,7 +259,7 @@ namespace L5A2Programming.Migrations
             migrationBuilder.InsertData(
                 table: "AspNetUsers",
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "FName", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SName", "SecurityStamp", "TwoFactorEnabled", "UserName" },
-                values: new object[] { "143d3180-1104-46f0-8646-62d630056f42", 0, "231728ec-ceef-4de5-8c95-7f82a488cc0d", "admin@admin.com", false, "Admin", false, null, "ADMIN@ADMIN.COM", "ADMIN@ADMIN.COM", "AQAAAAEAACcQAAAAEMv+oOlOG7O8jg8/QPqgVt+FqZLeKvLYfFMa1fhCXSQZSol5FPHXde+yk/RGcC8WuA==", null, false, "Admin", "69f9c0b7-daec-4300-b0e1-9b567e273c27", false, "admin@admin.com" });
+                values: new object[] { "143d3180-1104-46f0-8646-62d630056f42", 0, "231728ec-ceef-4de5-8c95-7f82a488cc0d", "admin@admin.com", false, "Admin", false, null, "ADMIN@ADMIN.COM", "ADMIN@ADMIN.COM", "AQAAAAEAACcQAAAAEEZlHrZ0Z7EiR6XQvq6m1lDh2jidyHmIkAa1wQk3KdjobywesbSA5FHY8Gyj6aQbMA==", null, false, "Admin", "9a271f2e-59ea-444d-a252-621b2c565137", false, "admin@admin.com" });
 
             migrationBuilder.InsertData(
                 table: "AspNetUserRoles",
@@ -302,6 +309,11 @@ namespace L5A2Programming.Migrations
                 column: "CategoryId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Assets_InstitutionId",
+                table: "Assets",
+                column: "InstitutionId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Issue_UserId",
                 table: "Issue",
                 column: "UserId");
@@ -328,9 +340,6 @@ namespace L5A2Programming.Migrations
                 name: "Assets");
 
             migrationBuilder.DropTable(
-                name: "Institutions");
-
-            migrationBuilder.DropTable(
                 name: "Issue");
 
             migrationBuilder.DropTable(
@@ -338,6 +347,9 @@ namespace L5A2Programming.Migrations
 
             migrationBuilder.DropTable(
                 name: "Categories");
+
+            migrationBuilder.DropTable(
+                name: "Institutions");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");
