@@ -33,11 +33,16 @@ namespace L5A2Programming.Migrations
                     b.Property<int>("InstitutionId")
                         .HasColumnType("INTEGER");
 
+                    b.Property<int>("RoomId")
+                        .HasColumnType("INTEGER");
+
                     b.HasKey("Id");
 
                     b.HasIndex("CategoryId");
 
                     b.HasIndex("InstitutionId");
+
+                    b.HasIndex("RoomId");
 
                     b.ToTable("Assets");
                 });
@@ -140,10 +145,10 @@ namespace L5A2Programming.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@ADMIN.COM",
                             NormalizedUserName = "ADMIN@ADMIN.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAENcBqSNtQS9U4hX9wqIeka2l4Q4QsTUjmKXCT6HeSM53WAIU8mKnrpV/VLRUVGFaIQ==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEN06xApMLqJSieIdTii2tU0ax0kH4bVTMr3djRvex6iBveiEnSDObeb1sbd1bj3wFg==",
                             PhoneNumberConfirmed = false,
                             SName = "Admin",
-                            SecurityStamp = "d8d7a3e3-c8b3-43d8-91e4-ef9e8006c82a",
+                            SecurityStamp = "c3f11028-4b1c-4b9d-b399-0ef87f98db77",
                             TwoFactorEnabled = false,
                             UserName = "admin@admin.com"
                         });
@@ -200,6 +205,21 @@ namespace L5A2Programming.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("Issue");
+                });
+
+            modelBuilder.Entity("L5A2Programming.Models.RoomModel", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Rooms");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -388,9 +408,17 @@ namespace L5A2Programming.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("L5A2Programming.Models.RoomModel", "Room")
+                        .WithMany()
+                        .HasForeignKey("RoomId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.Navigation("Category");
 
                     b.Navigation("Institution");
+
+                    b.Navigation("Room");
                 });
 
             modelBuilder.Entity("L5A2Programming.Models.IssueModel", b =>

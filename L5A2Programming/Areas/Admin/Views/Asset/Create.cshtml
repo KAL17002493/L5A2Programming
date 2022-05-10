@@ -11,6 +11,13 @@
                 <input asp-for="Asset.AssetName" type="text" class="form-control" id="Asset.AssetName" placeholder="Asset Name" name="Asset.AssetName">
                 <span asp-validation-for="Asset.AssetName" class="text-danger"></span>
             </div>
+
+            <div class="mb-3">
+                 <label for="" class="form-label">Room</label>
+                @Html.DropDownListFor(m => m.Asset.RoomId, Model.Institution, "Select a Room", new {@class = "form-select"})
+                <span asp-validation-for="Asset.RoomId" class="text-danger"></span>
+            </div>
+
             <div class="mb-3">
                  <label for="" class="form-label">Category</label>
                 @Html.DropDownListFor(m => m.Asset.CategoryId, Model.Categories, "Select a category", new {@class = "form-select"})

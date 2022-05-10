@@ -21,7 +21,7 @@ namespace L5A2Programming.Areas.Admin
         }
         public async Task<IActionResult> Index()
         {
-            var assets = await _db.Assets.Include("Category").Include("Institution").ToListAsync();
+            var assets = await _db.Assets.Include("Category").Include("Institution").Include("Room").ToListAsync();
             return View(assets);
 
         }
@@ -38,6 +38,11 @@ namespace L5A2Programming.Areas.Admin
                 }),
 
                 Institution = _db.Institutions.Select(i => new SelectListItem
+                {
+                    Text = i.Name,
+                    Value = i.Id.ToString()
+                }),
+                Room = _db.Rooms.Select(i => new SelectListItem
                 {
                     Text = i.Name,
                     Value = i.Id.ToString()
