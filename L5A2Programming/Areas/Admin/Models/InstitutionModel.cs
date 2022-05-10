@@ -9,5 +9,7 @@ namespace L5A2Programming.Models
 
         [Required]
         public string Name { get; set; }
+        public string Postcode { get; set; }
+        public string Address { get; set; }
     }
 }

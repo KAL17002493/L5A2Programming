@@ -52,7 +52,7 @@ namespace OnlineShop2022.Areas.Admin
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name")] InstitutionModel institutionsModel)
+        public async Task<IActionResult> Create([Bind("Id,Name,Postcode,Address")] InstitutionModel institutionsModel)
         {
             if (ModelState.IsValid)
             {
@@ -84,7 +84,7 @@ namespace OnlineShop2022.Areas.Admin
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name")] InstitutionModel institutionsModel)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Postcode,Address")] InstitutionModel institutionsModel)
         {
             if (id != institutionsModel.Id)
             {
