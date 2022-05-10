@@ -11,6 +11,7 @@ namespace L5A2Programming.Data
         public DbSet<AssetModel> Assets { get; set; }
         public DbSet<CategoryModel> Categories { get; set; }
         public DbSet<InstitutionModel> Institutions { get; set; }
+        public DbSet<IssueModel> Issue { get; set; }
 
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
         {
@@ -39,49 +40,49 @@ namespace L5A2Programming.Data
                 }
                 );
 
-            /*builder.Entity<IdentityRole>().HasData(
+            builder.Entity<IdentityRole>().HasData(
                 new IdentityRole()
                 {
                     Id = "ecfbe7ad-bb6b-49e6-ac2b-6359a73fbf02",
                     Name = "Institution manager",
-                    NormalizedName = "Customer".ToUpper(),
+                    NormalizedName = "Institution manager".ToUpper(),
                     ConcurrencyStamp = "68144efc-092a-403e-a7fe-3c276de06a72"
 
                 }
                 );
 
-              builder.Entity<IdentityRole>().HasData(
-                new IdentityRole()
-                {
-                    Id = "2e97d46f-5885-4d65-aa2f-29e7e2d323fd",
-                    Name = "Institution receptionist",
-                    NormalizedName = "Customer".ToUpper(),
-                    ConcurrencyStamp = "2a956498-1cb2-4a0f-8d27-236a95c6e820"
+            builder.Entity<IdentityRole>().HasData(
+              new IdentityRole()
+              {
+                  Id = "2e97d46f-5885-4d65-aa2f-29e7e2d323fd",
+                  Name = "Receptionist",
+                  NormalizedName = "Receptionist".ToUpper(),
+                  ConcurrencyStamp = "2a956498-1cb2-4a0f-8d27-236a95c6e820"
 
-                }
-                );
+              }
+              );
 
-             builder.Entity<IdentityRole>().HasData(
-                new IdentityRole()
-                {
-                    Id = "709a40af-4a4e-40b6-887b-d30dcdf07030",
-                    Name = "Other",
-                    NormalizedName = "Estate Staff".ToUpper(),
-                    ConcurrencyStamp = "7dde8d44-c46c-4a24-bf2d-e64e12a5a3fa"
+           builder.Entity<IdentityRole>().HasData(
+              new IdentityRole()
+              {
+                  Id = "709a40af-4a4e-40b6-887b-d30dcdf07030",
+                  Name = "Estate Staff",
+                  NormalizedName = "Estate Staff".ToUpper(),
+                  ConcurrencyStamp = "7dde8d44-c46c-4a24-bf2d-e64e12a5a3fa"
 
-                }
-                );
+              }
+              );
 
-             builder.Entity<IdentityRole>().HasData(
-                new IdentityRole()
-                {
-                    Id = "81f07450-3299-4100-94f4-6206aa56fa8c",
-                    Name = "Other",
-                    NormalizedName = "Estate Staff".ToUpper(),
-                    ConcurrencyStamp = "1203f98f-8044-463e-90cb-04e1a1f5b36b"
+           builder.Entity<IdentityRole>().HasData(
+              new IdentityRole()
+              {
+                  Id = "81f07450-3299-4100-94f4-6206aa56fa8c",
+                  Name = "Other",
+                  NormalizedName = "Other".ToUpper(),
+                  ConcurrencyStamp = "1203f98f-8044-463e-90cb-04e1a1f5b36b"
 
-                }
-                );*/
+              }
+              );
         }
 
 

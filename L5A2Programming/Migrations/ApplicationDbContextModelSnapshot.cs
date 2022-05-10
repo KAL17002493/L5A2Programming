@@ -30,9 +30,14 @@ namespace L5A2Programming.Migrations
                     b.Property<int>("CategoryId")
                         .HasColumnType("INTEGER");
 
+                    b.Property<int>("InstitutionId")
+                        .HasColumnType("INTEGER");
+
                     b.HasKey("Id");
 
                     b.HasIndex("CategoryId");
+
+                    b.HasIndex("InstitutionId");
 
                     b.ToTable("Assets");
                 });
@@ -135,10 +140,10 @@ namespace L5A2Programming.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@ADMIN.COM",
                             NormalizedUserName = "ADMIN@ADMIN.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAELFk2gCzXwDD/GRvAfQ3TLMOloV2RkXfJcrLzcyF8phN70Zbjda0GBgfZWMpBBEqoA==",
+                            PasswordHash = "AQAAAAEAACcQAAAAENcBqSNtQS9U4hX9wqIeka2l4Q4QsTUjmKXCT6HeSM53WAIU8mKnrpV/VLRUVGFaIQ==",
                             PhoneNumberConfirmed = false,
                             SName = "Admin",
-                            SecurityStamp = "0017cc60-7e3b-4ca6-811d-30098f671be9",
+                            SecurityStamp = "d8d7a3e3-c8b3-43d8-91e4-ef9e8006c82a",
                             TwoFactorEnabled = false,
                             UserName = "admin@admin.com"
                         });
@@ -150,13 +155,51 @@ namespace L5A2Programming.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
+                    b.Property<string>("Address")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
                     b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Postcode")
                         .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
 
                     b.ToTable("Institutions");
+                });
+
+            modelBuilder.Entity("L5A2Programming.Models.IssueModel", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Comment")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<int>("ItemId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<DateTime>("TimeStamp")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Type")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("UserId")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Issue");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -191,6 +234,34 @@ namespace L5A2Programming.Migrations
                             ConcurrencyStamp = "231728ec-ceef-4de5-8c95-7f82a488cc0d",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
+                        },
+                        new
+                        {
+                            Id = "ecfbe7ad-bb6b-49e6-ac2b-6359a73fbf02",
+                            ConcurrencyStamp = "68144efc-092a-403e-a7fe-3c276de06a72",
+                            Name = "Institution manager",
+                            NormalizedName = "INSTITUTION MANAGER"
+                        },
+                        new
+                        {
+                            Id = "2e97d46f-5885-4d65-aa2f-29e7e2d323fd",
+                            ConcurrencyStamp = "2a956498-1cb2-4a0f-8d27-236a95c6e820",
+                            Name = "Receptionist",
+                            NormalizedName = "RECEPTIONIST"
+                        },
+                        new
+                        {
+                            Id = "709a40af-4a4e-40b6-887b-d30dcdf07030",
+                            ConcurrencyStamp = "7dde8d44-c46c-4a24-bf2d-e64e12a5a3fa",
+                            Name = "Estate Staff",
+                            NormalizedName = "ESTATE STAFF"
+                        },
+                        new
+                        {
+                            Id = "81f07450-3299-4100-94f4-6206aa56fa8c",
+                            ConcurrencyStamp = "1203f98f-8044-463e-90cb-04e1a1f5b36b",
+                            Name = "Other",
+                            NormalizedName = "OTHER"
                         });
                 });
 
@@ -311,7 +382,24 @@ namespace L5A2Programming.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("L5A2Programming.Models.InstitutionModel", "Institution")
+                        .WithMany()
+                        .HasForeignKey("InstitutionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.Navigation("Category");
+
+                    b.Navigation("Institution");
+                });
+
+            modelBuilder.Entity("L5A2Programming.Models.IssueModel", b =>
+                {
+                    b.HasOne("L5A2Programming.Models.CustomUserModel", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

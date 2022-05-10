@@ -1,0 +1,38 @@
+﻿@model IEnumerable<L5A2Programming.Models.InstitutionModel>
+
+@{
+    ViewData["Title"] = "Insititution Details";
+}
+
+<h1>Insititution Details</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Postcode)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Address)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-primary">Edit</a>
+                <a asp-action="Index" class="btn btn-primary">Back</a>
+
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

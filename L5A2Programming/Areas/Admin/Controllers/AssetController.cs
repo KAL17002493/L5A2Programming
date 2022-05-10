@@ -21,9 +21,9 @@ namespace L5A2Programming.Areas.Admin
         }
         public async Task<IActionResult> Index()
         {
-            var assets = await _db.Assets.ToListAsync();
+            var assets = await _db.Assets.Include("Category").Include("Institution").ToListAsync();
             return View(assets);
-            /*.Include("Categories")*/
+
         }
 
 
@@ -35,12 +35,17 @@ namespace L5A2Programming.Areas.Admin
                 {
                     Text = i.Name,
                     Value = i.Id.ToString()
+                }),
+
+                Institution = _db.Institutions.Select(i => new SelectListItem
+                {
+                    Text = i.Name,
+                    Value = i.Id.ToString()
                 })
             };
             return View(assetViewModel);
         }
 
-        //Not sending the information through.
         [HttpPost]
         public async Task<IActionResult> Create(AssetViewModel assetViewModel)
         {

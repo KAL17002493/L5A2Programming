@@ -7,7 +7,6 @@ namespace L5A2Programming.Models
     {
         [Key]
         public int Id { get; set; }
-
         [Required]
         public string AssetName { get; set; }
 
@@ -18,8 +17,8 @@ namespace L5A2Programming.Models
         public CategoryModel Category { get; set; }
 
 
-        /*public int InstitutionId { get; set; }
+        public int InstitutionId { get; set; }
         [ForeignKey("InstitutionId")]
-        public InstitutionModel Institution { get; set; }*/
+        public InstitutionModel Institution { get; set; }
     }
 }

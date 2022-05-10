@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace L5A2Programming.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20220507112459_CategoryId")]
-    partial class CategoryId
+    [Migration("20220510085300_init")]
+    partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -142,10 +142,10 @@ namespace L5A2Programming.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@ADMIN.COM",
                             NormalizedUserName = "ADMIN@ADMIN.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAEJPrkV5JGo5rU2yKLbJR8xp68Kf48TK1nA8qxgkxn/NdnuWP7l9CyiH3cBgLLii34A==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEEZlHrZ0Z7EiR6XQvq6m1lDh2jidyHmIkAa1wQk3KdjobywesbSA5FHY8Gyj6aQbMA==",
                             PhoneNumberConfirmed = false,
                             SName = "Admin",
-                            SecurityStamp = "0f644694-3475-4370-ace7-60a3ccadfaae",
+                            SecurityStamp = "9a271f2e-59ea-444d-a252-621b2c565137",
                             TwoFactorEnabled = false,
                             UserName = "admin@admin.com"
                         });
@@ -164,6 +164,36 @@ namespace L5A2Programming.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Institutions");
+                });
+
+            modelBuilder.Entity("L5A2Programming.Models.IssueModel", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Comment")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<int>("ItemId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<DateTime>("TimeStamp")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Type")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("UserId")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Issue");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -198,6 +228,34 @@ namespace L5A2Programming.Migrations
                             ConcurrencyStamp = "231728ec-ceef-4de5-8c95-7f82a488cc0d",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
+                        },
+                        new
+                        {
+                            Id = "ecfbe7ad-bb6b-49e6-ac2b-6359a73fbf02",
+                            ConcurrencyStamp = "68144efc-092a-403e-a7fe-3c276de06a72",
+                            Name = "Institution manager",
+                            NormalizedName = "INSTITUTION MANAGER"
+                        },
+                        new
+                        {
+                            Id = "2e97d46f-5885-4d65-aa2f-29e7e2d323fd",
+                            ConcurrencyStamp = "2a956498-1cb2-4a0f-8d27-236a95c6e820",
+                            Name = "Receptionist",
+                            NormalizedName = "RECEPTIONIST"
+                        },
+                        new
+                        {
+                            Id = "709a40af-4a4e-40b6-887b-d30dcdf07030",
+                            ConcurrencyStamp = "7dde8d44-c46c-4a24-bf2d-e64e12a5a3fa",
+                            Name = "Estate Staff",
+                            NormalizedName = "ESTATE STAFF"
+                        },
+                        new
+                        {
+                            Id = "81f07450-3299-4100-94f4-6206aa56fa8c",
+                            ConcurrencyStamp = "1203f98f-8044-463e-90cb-04e1a1f5b36b",
+                            Name = "Other",
+                            NormalizedName = "OTHER"
                         });
                 });
 
@@ -327,6 +385,15 @@ namespace L5A2Programming.Migrations
                     b.Navigation("Category");
 
                     b.Navigation("Institution");
+                });
+
+            modelBuilder.Entity("L5A2Programming.Models.IssueModel", b =>
+                {
+                    b.HasOne("L5A2Programming.Models.CustomUserModel", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
