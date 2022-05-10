@@ -135,10 +135,10 @@ namespace L5A2Programming.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@ADMIN.COM",
                             NormalizedUserName = "ADMIN@ADMIN.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAEPP+x62bPljCawIPtonVN3VBTu3u7QkA5FEgoSG8VReBLN/TAScM1u1WKQdfG2OeYQ==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEMv+oOlOG7O8jg8/QPqgVt+FqZLeKvLYfFMa1fhCXSQZSol5FPHXde+yk/RGcC8WuA==",
                             PhoneNumberConfirmed = false,
                             SName = "Admin",
-                            SecurityStamp = "6617a7fd-c796-444b-8f44-bde94f46f31b",
+                            SecurityStamp = "69f9c0b7-daec-4300-b0e1-9b567e273c27",
                             TwoFactorEnabled = false,
                             UserName = "admin@admin.com"
                         });
@@ -221,6 +221,34 @@ namespace L5A2Programming.Migrations
                             ConcurrencyStamp = "231728ec-ceef-4de5-8c95-7f82a488cc0d",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
+                        },
+                        new
+                        {
+                            Id = "ecfbe7ad-bb6b-49e6-ac2b-6359a73fbf02",
+                            ConcurrencyStamp = "68144efc-092a-403e-a7fe-3c276de06a72",
+                            Name = "Institution manager",
+                            NormalizedName = "INSTITUTION MANAGER"
+                        },
+                        new
+                        {
+                            Id = "2e97d46f-5885-4d65-aa2f-29e7e2d323fd",
+                            ConcurrencyStamp = "2a956498-1cb2-4a0f-8d27-236a95c6e820",
+                            Name = "Receptionist",
+                            NormalizedName = "RECEPTIONIST"
+                        },
+                        new
+                        {
+                            Id = "709a40af-4a4e-40b6-887b-d30dcdf07030",
+                            ConcurrencyStamp = "7dde8d44-c46c-4a24-bf2d-e64e12a5a3fa",
+                            Name = "Estate Staff",
+                            NormalizedName = "ESTATE STAFF"
+                        },
+                        new
+                        {
+                            Id = "81f07450-3299-4100-94f4-6206aa56fa8c",
+                            ConcurrencyStamp = "1203f98f-8044-463e-90cb-04e1a1f5b36b",
+                            Name = "Other",
+                            NormalizedName = "OTHER"
                         });
                 });
 

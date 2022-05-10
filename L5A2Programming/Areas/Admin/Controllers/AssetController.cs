@@ -40,7 +40,6 @@ namespace L5A2Programming.Areas.Admin
             return View(assetViewModel);
         }
 
-        //Not sending the information through.
         [HttpPost]
         public async Task<IActionResult> Create(AssetViewModel assetViewModel)
         {
