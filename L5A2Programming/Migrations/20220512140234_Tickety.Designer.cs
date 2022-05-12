@@ -3,6 +3,7 @@ using System;
 using L5A2Programming.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,12 +11,13 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace L5A2Programming.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220512140234_Tickety")]
+    partial class Tickety
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
-            modelBuilder.HasAnnotation("ProductVersion", "6.0.5");
+            modelBuilder.HasAnnotation("ProductVersion", "6.0.4");
 
             modelBuilder.Entity("L5A2Programming.Models.AssetModel", b =>
                 {
@@ -60,35 +62,6 @@ namespace L5A2Programming.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Categories");
-                });
-
-            modelBuilder.Entity("L5A2Programming.Models.CommentModel", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
-
-                    b.Property<string>("Comment")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.Property<int?>("TicketModelId")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<string>("customUserId")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.Property<DateTime>("dateTime")
-                        .HasColumnType("TEXT");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("TicketModelId");
-
-                    b.HasIndex("customUserId");
-
-                    b.ToTable("CommentModel");
                 });
 
             modelBuilder.Entity("L5A2Programming.Models.CustomUserModel", b =>
@@ -174,10 +147,10 @@ namespace L5A2Programming.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@ADMIN.COM",
                             NormalizedUserName = "ADMIN@ADMIN.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAEKidhUyaHx7ns/iUGG9htJbegef3ZFcDSJIfJHxasevuVd/uPjlDINXUjV1FqpPEqA==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEJMU+CoKhWCuwKIX3qLJe6FknkhL6Ij1NmRmEsNcvqKT/0wFYkKCM6pJrB7IrmsskA==",
                             PhoneNumberConfirmed = false,
                             SName = "Admin",
-                            SecurityStamp = "aa4cc223-8e8d-407c-927f-91e0063af43b",
+                            SecurityStamp = "3e0611b2-ab8b-43af-9454-0379d7d4b4e0",
                             TwoFactorEnabled = false,
                             UserName = "admin@admin.com"
                         });
@@ -219,45 +192,6 @@ namespace L5A2Programming.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Rooms");
-                });
-
-            modelBuilder.Entity("L5A2Programming.Models.TicketModel", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int>("AssetId")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<string>("EmailAddress")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.Property<int>("InstitutionId")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<bool>("Resolved")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int>("RoomId")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int>("Type")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<DateTime>("dateTime")
-                        .HasColumnType("TEXT");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("AssetId");
-
-                    b.HasIndex("InstitutionId");
-
-                    b.HasIndex("RoomId");
-
-                    b.ToTable("Tickets");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -459,48 +393,6 @@ namespace L5A2Programming.Migrations
                     b.Navigation("Room");
                 });
 
-            modelBuilder.Entity("L5A2Programming.Models.CommentModel", b =>
-                {
-                    b.HasOne("L5A2Programming.Models.TicketModel", null)
-                        .WithMany("Comments")
-                        .HasForeignKey("TicketModelId");
-
-                    b.HasOne("L5A2Programming.Models.CustomUserModel", "customUser")
-                        .WithMany()
-                        .HasForeignKey("customUserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("customUser");
-                });
-
-            modelBuilder.Entity("L5A2Programming.Models.TicketModel", b =>
-                {
-                    b.HasOne("L5A2Programming.Models.AssetModel", "Asset")
-                        .WithMany()
-                        .HasForeignKey("AssetId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("L5A2Programming.Models.InstitutionModel", "Institution")
-                        .WithMany()
-                        .HasForeignKey("InstitutionId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("L5A2Programming.Models.RoomModel", "Room")
-                        .WithMany()
-                        .HasForeignKey("RoomId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Asset");
-
-                    b.Navigation("Institution");
-
-                    b.Navigation("Room");
-                });
-
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
@@ -550,11 +442,6 @@ namespace L5A2Programming.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("L5A2Programming.Models.TicketModel", b =>
-                {
-                    b.Navigation("Comments");
                 });
 #pragma warning restore 612, 618
         }

@@ -3,6 +3,7 @@ using System;
 using L5A2Programming.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace L5A2Programming.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220512140904_tieckt")]
+    partial class tieckt
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "6.0.5");
@@ -174,10 +176,10 @@ namespace L5A2Programming.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@ADMIN.COM",
                             NormalizedUserName = "ADMIN@ADMIN.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAEKidhUyaHx7ns/iUGG9htJbegef3ZFcDSJIfJHxasevuVd/uPjlDINXUjV1FqpPEqA==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEDVlV0YvxkOCy9U5AQ31uYOCJkYa07kk9jUvhKAVoC/WM8xWCTRSH66tNTvKx1I7rw==",
                             PhoneNumberConfirmed = false,
                             SName = "Admin",
-                            SecurityStamp = "aa4cc223-8e8d-407c-927f-91e0063af43b",
+                            SecurityStamp = "75436c3c-97cd-4ffe-a6a9-caee225a514b",
                             TwoFactorEnabled = false,
                             UserName = "admin@admin.com"
                         });
@@ -257,7 +259,7 @@ namespace L5A2Programming.Migrations
 
                     b.HasIndex("RoomId");
 
-                    b.ToTable("Tickets");
+                    b.ToTable("Issue");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
