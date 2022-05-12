@@ -84,46 +84,7 @@ namespace L5A2Programming.Areas.Admin.Controllers
             return View(ticketModel);
         }
 
-        // POST: Admin/Ticket/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,EmailAddress,dateTime,Resolved,InstitutionId,RoomId,AssetId,Type")] TicketModel ticketModel)
-        {
-            if (id != ticketModel.Id)
-            {
-                return NotFound();
-            }
-
-            if (ModelState.IsValid)
-            {
-                try
-                {
-                    _db.Update(ticketModel);
-                    await _db.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!TicketModelExists(ticketModel.Id))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-                return RedirectToAction(nameof(Index));
-            }
-            ViewData["AssetId"] = new SelectList(_db.Assets, "Id", "AssetName", ticketModel.AssetId);
-            ViewData["InstitutionId"] = new SelectList(_db.Institutions, "Id", "Name", ticketModel.InstitutionId);
-            ViewData["RoomId"] = new SelectList(_db.Rooms, "Id", "Name", ticketModel.RoomId);
-            return View(ticketModel);
-        }
-
-        // GET: Admin/Ticket/Delete/5
-        public async Task<IActionResult> Delete(int? id)
+        public async Task<IActionResult> Details(int id)
         {
             if (id == null || _db.Tickets == null)
             {
@@ -143,21 +104,20 @@ namespace L5A2Programming.Areas.Admin.Controllers
             return View(ticketModel);
         }
 
-        // POST: Admin/Ticket/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
+        public async Task<IActionResult> Delete(int id)
         {
-            if (_db.Tickets == null)
+            if (id == null)
             {
-                return Problem("Entity set 'ApplicationDbContext.Tickets'  is null.");
+                return NotFound();
             }
+
             var ticketModel = await _db.Tickets.FindAsync(id);
-            if (ticketModel != null)
+            if (ticketModel == null)
             {
-                _db.Tickets.Remove(ticketModel);
+                return NotFound();
             }
-            
+
+            _db.Tickets.Remove(ticketModel);
             await _db.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
