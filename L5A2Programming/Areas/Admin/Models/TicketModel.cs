@@ -1,14 +1,10 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using L5A2Programming.Areas.Admin.Models;
 using L5A2Programming.Models;
 
 namespace L5A2Programming.Models
 {
-    public enum issueType
-    {
-        Maintenance,
-        General
-    }
     public class TicketModel
     {
         [Key]
@@ -35,7 +31,7 @@ namespace L5A2Programming.Models
         [ForeignKey("AssetId")]
         public AssetModel Asset { get; set; }
 
-        public issueType Type { get; set; }
+        public IssueTypeEnumModelcs Type { get; set; }
 
     }
 }
