@@ -117,6 +117,23 @@ namespace L5A2Programming.Areas.Admin.Controllers
 
         public async Task<IActionResult> ManageInstitution(int? id)
         {
+            var user = await _userManager.FindByIdAsync
+            if (user == null)
+            {
+                return RedirectToAction("Index");
+            }
+
+            var viewModels = new List<ManageUserRoleViewModel>();
+            foreach (var role in _roleManager.Roles)
+            {
+                var vm = new ManageUserRoleViewModel();
+                vm.User = user;
+                vm.Role = role;
+                vm.IsInRole = await _userManager.IsInRoleAsync(user, role.Name);
+                viewModels.Add(vm);
+            }
+
+            return View(viewModels);
             return RedirectToAction("Index");
         }
     }
