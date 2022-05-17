@@ -4,7 +4,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using L5A2Programming.Areas.Admin.Models;
 using L5A2Programming.Models;
-
+using L5A2Programming.Data;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace L5A2Programming.Areas.Admin.Controllers
 {
@@ -14,15 +15,17 @@ namespace L5A2Programming.Areas.Admin.Controllers
     {
         private readonly RoleManager<IdentityRole> _roleManager;
         private readonly UserManager<CustomUserModel> _userManager;
-        public UserRolesController(RoleManager<IdentityRole> roleManager, UserManager<CustomUserModel> userManager)
+        private readonly ApplicationDbContext _db;
+        public UserRolesController(RoleManager<IdentityRole> roleManager, UserManager<CustomUserModel> userManager, ApplicationDbContext db)
         {
             _roleManager = roleManager;
             _userManager = userManager;
+            _db = db;
         }
 
         public async Task<IActionResult> Index()
         {
-            var users = await _userManager.Users.ToListAsync();
+            var users = await _userManager.Users.Include("Institution").ToListAsync();
             var VMlist = new List<UserRolesViewModel>();
             foreach (var user in users)
             {
@@ -112,10 +115,56 @@ namespace L5A2Programming.Areas.Admin.Controllers
             {
                 return RedirectToAction("Manage");
             }
-
-
-
-
+           
         }
+
+        //Get
+        public async Task<IActionResult> ManageInstitution(string id)
+        {
+            var user = await _userManager.FindByIdAsync(id);
+            var institution = await _db.Institutions.ToListAsync();
+
+            if (user == null)
+            {
+                return RedirectToAction("Index");
+            }
+            ManageInstitutionViewModel viewModel = new ManageInstitutionViewModel()
+            {
+                User = user,
+                Institution = _db.Institutions.Select(i => new SelectListItem
+                {
+                    Text = i.Name,
+                    Value = i.Id.ToString()
+                })
+            };
+            
+            return View(viewModel);
+    }
+
+        [HttpPost]
+        public async Task<IActionResult> ManageInstitution(ManageInstitutionViewModel model)
+        {
+            
+            if (model != null)
+            {
+                var user = await _userManager.FindByIdAsync(model.User.Id);
+            
+                if(user != null)
+                {
+                    user.InstitutionId = model.User.InstitutionId;
+                    _db.Users.Update(user);
+                    await _db.SaveChangesAsync();
+                    return RedirectToAction("Index");
+                }
+                else
+                {
+                    return RedirectToAction("Index");
+                }
+            }
+            return RedirectToAction("Index");
+        }
+
+
+
     }
 }

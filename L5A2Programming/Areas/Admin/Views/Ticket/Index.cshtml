@@ -1,0 +1,47 @@
+﻿@model IEnumerable<TicketModel>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<h1>Asset Management</h1>
+
+ <a class="btn btn-primary mb-3" asp-action="Create">New Ticket</a>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">By</th>
+            <th scope="col">Date</th>
+            <th scope="col">Resolved</th>
+            <th scope="col">Room</th>
+            <th scope="col">Asset</th>
+            <th scope="col">Institution</th>
+            <th scope="col">Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+
+        @foreach (var ticket in Model)
+        {
+            <tr>
+                <th scope="row">@ticket.Id</th>
+                <td>@ticket.EmailAddress</td>
+                <td>@ticket.dateTime</td>
+                <td>@ticket.Resolved</td>
+                <td>@ticket.Room.Name</td>
+                <td>@ticket.Asset.AssetName</td>
+                <td>@ticket.Institution.Name</td>
+                <td>
+                    <a class="btn btn-secondary" asp-controller="Ticket" asp-action="Details" asp-route-id="@ticket.Id">View</a>
+                    <a class="btn btn-danger" asp-controller="Ticket" asp-action="Delete" asp-route-id="@ticket.Id">Delete</a>
+                </td>
+            </tr>
+        }
+
+
+    </tbody>
+</table>

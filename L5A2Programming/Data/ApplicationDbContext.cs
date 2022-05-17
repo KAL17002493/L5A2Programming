@@ -11,7 +11,7 @@ namespace L5A2Programming.Data
         public DbSet<AssetModel> Assets { get; set; }
         public DbSet<CategoryModel> Categories { get; set; }
         public DbSet<InstitutionModel> Institutions { get; set; }
-        public DbSet<IssueModel> Issue { get; set; }
+        public DbSet<TicketModel> Tickets { get; set; }
         public DbSet<RoomModel> Rooms { get; set; }
 
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
@@ -26,8 +26,22 @@ namespace L5A2Programming.Data
             SeedAdmin(builder);
             SeedRoles(builder);
             SeedUserRoles(builder);
+            SeedInstitution(builder);
         }
 
+        private void SeedInstitution(ModelBuilder builder)
+        {
+            builder.Entity<InstitutionModel>().HasData(
+                new InstitutionModel()
+                {
+                    Id = 1,
+                    Name = "Default",
+                    Postcode = String.Empty,
+                    Address = String.Empty
+                }
+                );
+
+        }
         private void SeedRoles(ModelBuilder builder)
         {
             builder.Entity<IdentityRole>().HasData(
@@ -101,6 +115,8 @@ namespace L5A2Programming.Data
             user.SName = "Admin";
             user.ConcurrencyStamp = "231728ec-ceef-4de5-8c95-7f82a488cc0d";
             user.PasswordHash = hasher.HashPassword(user, "Admin123!");
+
+            user.InstitutionId = 1;
 
             builder.Entity<CustomUserModel>().HasData(user);
 

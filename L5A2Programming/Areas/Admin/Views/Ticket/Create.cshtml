@@ -1,0 +1,36 @@
+﻿@model L5A2Programming.Models.TicketViewModel
+
+<h1>Create</h1>
+
+<div class="container">
+    <form method="post" asp-action="Create" enctype="multipart/form-data">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div class="">
+
+            <div class="mb-3">
+                 <label for="" class="form-label">Asset</label>
+                @Html.DropDownListFor(m => m.Ticket.AssetId, Model.Asset, "Select a category", new {@class = "form-select"})
+                <span asp-validation-for="Ticket.AssetId" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                 <label for="" class="form-label">Room</label>
+                @Html.DropDownListFor(m => m.Ticket.RoomId, Model.Room, "Select a Room", new {@class = "form-select"})
+                <span asp-validation-for="Ticket.RoomId" class="text-danger"></span>
+            </div>
+
+
+            <div class="mb-3">
+                 <label for="" class="form-label">Institution</label>
+                @Html.DropDownListFor(m => m.Ticket.InstitutionId, Model.Institution, "Select an Institution", new {@class = "form-select"})
+                <span asp-validation-for="Ticket.InstitutionId" class="text-danger"></span>
+            </div>
+
+
+            <div class="mb-3">
+                <button class="btn btn-primary" type="submit">Add Asset</button>
+            </div>
+        </div>
+    </form>
+
+</div>

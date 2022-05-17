@@ -9,6 +9,7 @@
         <div class="card-header">
             <h2>Manage @Model.FirstOrDefault().User.FName 's Roles</h2>
         </div>
+
         <div class="card-body">
             @for (int i = 0; i < Model.Count; i++)
             {
@@ -22,6 +23,7 @@
                 </div>
             }
         </div>
+
         <div class="card-footer">
             <button class="btn btn-secondary" type="submit">Update</button>
             <a class="btn btn-danger" asp-action="Index">Cancel</a>
