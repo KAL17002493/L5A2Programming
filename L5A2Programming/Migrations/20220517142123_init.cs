@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace L5A2Programming.Migrations
 {
-    public partial class Init : Migration
+    public partial class init : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -329,17 +329,12 @@ namespace L5A2Programming.Migrations
             migrationBuilder.InsertData(
                 table: "Institutions",
                 columns: new[] { "Id", "Address", "Name", "Postcode" },
-                values: new object[] { 1, "Admin Road 12", "AdminCampus", "AD44IN" });
-
-            migrationBuilder.InsertData(
-                table: "Institutions",
-                columns: new[] { "Id", "Address", "Name", "Postcode" },
-                values: new object[] { 2, "Pine Road 12", "Taunton", "TA14TJ" });
+                values: new object[] { 1, "", "Default", "" });
 
             migrationBuilder.InsertData(
                 table: "AspNetUsers",
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "FName", "InstitutionId", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SName", "SecurityStamp", "TwoFactorEnabled", "UserName" },
-                values: new object[] { "143d3180-1104-46f0-8646-62d630056f42", 0, "231728ec-ceef-4de5-8c95-7f82a488cc0d", "admin@admin.com", false, "Admin", 1, false, null, "ADMIN@ADMIN.COM", "ADMIN@ADMIN.COM", "AQAAAAEAACcQAAAAEGoFFpzUKPLY3muGIXO0t/Ud4VyYbP5iLCCYrj1GOSpC3s1FXFN05dKmTqfi3Iha7w==", null, false, "Admin", "5b6da102-9024-4f3a-b3e6-0416404b92cd", false, "admin@admin.com" });
+                values: new object[] { "143d3180-1104-46f0-8646-62d630056f42", 0, "231728ec-ceef-4de5-8c95-7f82a488cc0d", "admin@admin.com", false, "Admin", 1, false, null, "ADMIN@ADMIN.COM", "ADMIN@ADMIN.COM", "AQAAAAEAACcQAAAAEKFO7xclI+R0L4l7GqPmc5DRqcKbjZ21N2lZDAGBtMutR4hIlRs0lzCaoHfUdNz78g==", null, false, "Admin", "ebce78ee-586f-4ff4-a71f-d7fd087a56be", false, "admin@admin.com" });
 
             migrationBuilder.InsertData(
                 table: "AspNetUserRoles",

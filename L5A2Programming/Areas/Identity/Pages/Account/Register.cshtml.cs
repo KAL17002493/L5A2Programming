@@ -79,6 +79,7 @@ namespace L5A2Programming.Areas.Identity.Pages.Account
             [Required]
             [Display(Name = "Surname")]
             public string SName { get; set; }
+
             /// <summary>
             ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
             ///     directly from your code. This API may change or be removed in future releases.
@@ -121,7 +122,8 @@ namespace L5A2Programming.Areas.Identity.Pages.Account
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
             if (ModelState.IsValid)
             {
-                var user = new CustomUserModel { UserName = Input.Email, Email = Input.Email, FName = Input.FName, SName = Input.SName };
+                var user = new CustomUserModel { UserName = Input.Email, Email = Input.Email, FName = Input.FName, SName = Input.SName};
+                user.InstitutionId = 1;
                 var result = await _userManager.CreateAsync(user, Input.Password);
                 if (result.Succeeded)
                 {

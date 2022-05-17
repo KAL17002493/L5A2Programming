@@ -180,10 +180,10 @@ namespace L5A2Programming.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@ADMIN.COM",
                             NormalizedUserName = "ADMIN@ADMIN.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAEINHMunAzLMw6VqoXfcfkp/XRWI/06czbe9lea/sRjYhPr21pMz/E0+K6F9rQD7F3w==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEKFO7xclI+R0L4l7GqPmc5DRqcKbjZ21N2lZDAGBtMutR4hIlRs0lzCaoHfUdNz78g==",
                             PhoneNumberConfirmed = false,
                             SName = "Admin",
-                            SecurityStamp = "18447612-fcdf-4d45-8f98-eec55c334eda",
+                            SecurityStamp = "ebce78ee-586f-4ff4-a71f-d7fd087a56be",
                             TwoFactorEnabled = false,
                             UserName = "admin@admin.com"
                         });
@@ -215,16 +215,9 @@ namespace L5A2Programming.Migrations
                         new
                         {
                             Id = 1,
-                            Address = "Admin Road 12",
-                            Name = "AdminCampus",
-                            Postcode = "AD44IN"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Address = "Pine Road 12",
-                            Name = "Taunton",
-                            Postcode = "TA14TJ"
+                            Address = "",
+                            Name = "Default",
+                            Postcode = ""
                         });
                 });
 

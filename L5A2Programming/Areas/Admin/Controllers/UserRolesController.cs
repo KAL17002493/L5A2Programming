@@ -124,11 +124,11 @@ namespace L5A2Programming.Areas.Admin.Controllers
             var user = await _userManager.FindByIdAsync(id);
             var institution = await _db.Institutions.ToListAsync();
 
-            if(user == null)
+            if (user == null)
             {
-                return RedirectToAction("Manage");
+                return RedirectToAction("Index");
             }
-            ManageInstitutionViewModel model = new ManageInstitutionViewModel()
+            ManageInstitutionViewModel viewModel = new ManageInstitutionViewModel()
             {
                 User = user,
                 Institution = _db.Institutions.Select(i => new SelectListItem
@@ -137,8 +137,9 @@ namespace L5A2Programming.Areas.Admin.Controllers
                     Value = i.Id.ToString()
                 })
             };
-            return RedirectToAction("Manage");
-        }
+            
+            return View(viewModel);
+    }
 
         [HttpPost]
         public async Task<IActionResult> ManageInstitution(ManageInstitutionViewModel model)
@@ -153,14 +154,14 @@ namespace L5A2Programming.Areas.Admin.Controllers
                     user.InstitutionId = model.User.InstitutionId;
                     _db.Users.Update(user);
                     await _db.SaveChangesAsync();
-                    return RedirectToAction("Manage");
+                    return RedirectToAction("Index");
                 }
                 else
                 {
-                    return RedirectToAction("Manage");
+                    return RedirectToAction("Index");
                 }
             }
-            return RedirectToAction("Manage");
+            return RedirectToAction("Index");
         }
 
 

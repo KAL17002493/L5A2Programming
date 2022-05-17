@@ -1,27 +1,27 @@
-﻿@*@using L5A2Programming.Areas.Admin.Models
-@model List<ManageInstitutionViewModel>
+﻿@using L5A2Programming.Areas.Admin.Models
+@model ManageInstitutionViewModel
 
+@{
+    ViewData["Title"] = "ManageInstitution";
+}
     <h1>Update</h1>
 
+    
 
-<div class="container">
-    <form method="post" enctype="multipart/form-data">
 
+    <form method="post">
+        <div class="card">
         <div class="card-header">
-            <h2>Manage @Model.FirstOrDefault().User.FName 's Institution</h2>
+            <h2>Manage @Model.User.FName 's Institution</h2>
         </div>
-
+        <input type="hidden" asp-for="@Model.User.Id" />
         <div class="">
-
-            <div class="mb-3">
-                 <label for="" class="form-label">Institution</label>
-                @Html.DropDownListFor(m => m.User, "Select a Institution", new {@class = "form-select"})
-            </div>
-
-            <div class="mb-3">
-                <button class="btn btn-secondary" type="submit">Update</button>
-            </div>
-
+            @Html.DropDownListFor(m => m.User.InstitutionId, Model.Institution, "Select an Institution", new {@class = "form-select"})
         </div>
+
+        <div class="card-footer">
+            <button class="btn btn-secondary" type="submit">Update</button>
+            <a class="btn btn-danger" asp-action="Index">Cancel</a>
+        </div>
+        </div>           
     </form>
-</div>*@

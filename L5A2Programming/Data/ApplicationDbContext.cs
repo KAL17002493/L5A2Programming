@@ -35,20 +35,12 @@ namespace L5A2Programming.Data
                 new InstitutionModel()
                 {
                     Id = 1,
-                    Name = "AdminCampus",
-                    Postcode = "AD44IN",
-                    Address = "Admin Road 12"
+                    Name = "Default",
+                    Postcode = String.Empty,
+                    Address = String.Empty
                 }
                 );
-            builder.Entity<InstitutionModel>().HasData(
-                new InstitutionModel()
-                { 
-                    Id = 2,
-                    Name = "Taunton",
-                    Postcode= "TA14TJ",
-                    Address= "Pine Road 12"
-                }
-                );
+
         }
         private void SeedRoles(ModelBuilder builder)
         {
