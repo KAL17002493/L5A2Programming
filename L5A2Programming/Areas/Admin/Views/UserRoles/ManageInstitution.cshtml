@@ -1,1 +1,27 @@
-﻿
+﻿@*@using L5A2Programming.Areas.Admin.Models
+@model List<ManageInstitutionViewModel>
+
+    <h1>Update</h1>
+
+
+<div class="container">
+    <form method="post" enctype="multipart/form-data">
+
+        <div class="card-header">
+            <h2>Manage @Model.FirstOrDefault().User.FName 's Institution</h2>
+        </div>
+
+        <div class="">
+
+            <div class="mb-3">
+                 <label for="" class="form-label">Institution</label>
+                @Html.DropDownListFor(m => m.User, "Select a Institution", new {@class = "form-select"})
+            </div>
+
+            <div class="mb-3">
+                <button class="btn btn-secondary" type="submit">Update</button>
+            </div>
+
+        </div>
+    </form>
+</div>*@
