@@ -22,7 +22,7 @@ namespace L5A2Programming.Areas.Admin.Controllers
 
         public async Task<IActionResult> Index()
         {
-            var users = await _userManager.Users.ToListAsync();
+            var users = await _userManager.Users.Include("Institution").ToListAsync();
             var VMlist = new List<UserRolesViewModel>();
             foreach (var user in users)
             {
@@ -112,10 +112,12 @@ namespace L5A2Programming.Areas.Admin.Controllers
             {
                 return RedirectToAction("Manage");
             }
+           
+        }
 
-
-
-
+        public async Task<IActionResult> ManageInstitution(int? id)
+        {
+            return RedirectToAction("Index");
         }
     }
 }

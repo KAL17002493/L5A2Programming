@@ -31,7 +31,5 @@ namespace L5A2Programming.Models
         [ForeignKey("AssetId")]
         public AssetModel Asset { get; set; }
 
-        public IssueTypeEnumModelcs Type { get; set; }
-
     }
 }

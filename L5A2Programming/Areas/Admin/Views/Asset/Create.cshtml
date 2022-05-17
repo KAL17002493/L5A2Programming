@@ -14,7 +14,7 @@
 
             <div class="mb-3">
                  <label for="" class="form-label">Room</label>
-                @Html.DropDownListFor(m => m.Asset.RoomId, Model.Institution, "Select a Room", new {@class = "form-select"})
+                @Html.DropDownListFor(m => m.Asset.RoomId, Model.Room, "Select a Room", new {@class = "form-select"})
                 <span asp-validation-for="Asset.RoomId" class="text-danger"></span>
             </div>
 

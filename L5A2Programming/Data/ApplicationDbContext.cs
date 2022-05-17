@@ -26,8 +26,30 @@ namespace L5A2Programming.Data
             SeedAdmin(builder);
             SeedRoles(builder);
             SeedUserRoles(builder);
+            SeedInstitution(builder);
         }
 
+        private void SeedInstitution(ModelBuilder builder)
+        {
+            builder.Entity<InstitutionModel>().HasData(
+                new InstitutionModel()
+                {
+                    Id = 1,
+                    Name = "AdminCampus",
+                    Postcode = "AD44IN",
+                    Address = "Admin Road 12"
+                }
+                );
+            builder.Entity<InstitutionModel>().HasData(
+                new InstitutionModel()
+                { 
+                    Id = 2,
+                    Name = "Taunton",
+                    Postcode= "TA14TJ",
+                    Address= "Pine Road 12"
+                }
+                );
+        }
         private void SeedRoles(ModelBuilder builder)
         {
             builder.Entity<IdentityRole>().HasData(
@@ -101,6 +123,8 @@ namespace L5A2Programming.Data
             user.SName = "Admin";
             user.ConcurrencyStamp = "231728ec-ceef-4de5-8c95-7f82a488cc0d";
             user.PasswordHash = hasher.HashPassword(user, "Admin123!");
+
+            user.InstitutionId = 1;
 
             builder.Entity<CustomUserModel>().HasData(user);
 

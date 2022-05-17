@@ -114,6 +114,9 @@ namespace L5A2Programming.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
+                    b.Property<int>("InstitutionId")
+                        .HasColumnType("INTEGER");
+
                     b.Property<bool>("LockoutEnabled")
                         .HasColumnType("INTEGER");
 
@@ -153,6 +156,8 @@ namespace L5A2Programming.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("InstitutionId");
+
                     b.HasIndex("NormalizedEmail")
                         .HasDatabaseName("EmailIndex");
 
@@ -171,13 +176,14 @@ namespace L5A2Programming.Migrations
                             Email = "admin@admin.com",
                             EmailConfirmed = false,
                             FName = "Admin",
+                            InstitutionId = 1,
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@ADMIN.COM",
                             NormalizedUserName = "ADMIN@ADMIN.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAEKidhUyaHx7ns/iUGG9htJbegef3ZFcDSJIfJHxasevuVd/uPjlDINXUjV1FqpPEqA==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEGoFFpzUKPLY3muGIXO0t/Ud4VyYbP5iLCCYrj1GOSpC3s1FXFN05dKmTqfi3Iha7w==",
                             PhoneNumberConfirmed = false,
                             SName = "Admin",
-                            SecurityStamp = "aa4cc223-8e8d-407c-927f-91e0063af43b",
+                            SecurityStamp = "5b6da102-9024-4f3a-b3e6-0416404b92cd",
                             TwoFactorEnabled = false,
                             UserName = "admin@admin.com"
                         });
@@ -204,6 +210,22 @@ namespace L5A2Programming.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Institutions");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Address = "Admin Road 12",
+                            Name = "AdminCampus",
+                            Postcode = "AD44IN"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Address = "Pine Road 12",
+                            Name = "Taunton",
+                            Postcode = "TA14TJ"
+                        });
                 });
 
             modelBuilder.Entity("L5A2Programming.Models.RoomModel", b =>
@@ -241,9 +263,6 @@ namespace L5A2Programming.Migrations
                         .HasColumnType("INTEGER");
 
                     b.Property<int>("RoomId")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int>("Type")
                         .HasColumnType("INTEGER");
 
                     b.Property<DateTime>("dateTime")
@@ -472,6 +491,17 @@ namespace L5A2Programming.Migrations
                         .IsRequired();
 
                     b.Navigation("customUser");
+                });
+
+            modelBuilder.Entity("L5A2Programming.Models.CustomUserModel", b =>
+                {
+                    b.HasOne("L5A2Programming.Models.InstitutionModel", "Institution")
+                        .WithMany()
+                        .HasForeignKey("InstitutionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Institution");
                 });
 
             modelBuilder.Entity("L5A2Programming.Models.TicketModel", b =>
