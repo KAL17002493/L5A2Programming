@@ -19,9 +19,20 @@ namespace L5A2Programming.Areas.Admin
             _webHostEnvironment = webHostEnvironment;
             _db = db;
         }
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string search)
         {
-            var assets = await _db.Assets.Include("Category").Include("Institution").Include("Room").ToListAsync();
+            List<AssetModel> assets;
+
+            if (search != null)
+            {
+                assets = await _db.Assets.Where(a => a.AssetName.ToLower().Contains(search.ToLower())).Include("Category").Include("Institution").Include("Room").ToListAsync();
+            }
+            else 
+            {
+                assets = await _db.Assets.Include("Category").Include("Institution").Include("Room").ToListAsync();
+            }
+
+            ViewData["search"] = search;
             return View(assets);
 
         }
@@ -119,7 +130,6 @@ namespace L5A2Programming.Areas.Admin
             return View(assetViewModel);
         }
 
-        [HttpPost]
         public async Task<IActionResult> Delete(int? id, AssetModel model)
         {
             if (id == null)
@@ -136,32 +146,8 @@ namespace L5A2Programming.Areas.Admin
 
             _db.Assets.Remove(currentAsset);
             await _db.SaveChangesAsync();
-
             return RedirectToAction(nameof(Index));
 
         }
-
-
-
-        //GET
-        public async Task<IActionResult> Delete(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            AssetModel currentAsset = await _db.Assets.FindAsync(id);
-
-            if (currentAsset == null)
-            {
-                return NotFound();
-            }
-
-            return View(currentAsset);
-        }
-
-
-
     }
 }

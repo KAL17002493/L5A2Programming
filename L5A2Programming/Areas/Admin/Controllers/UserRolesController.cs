@@ -23,10 +23,13 @@ namespace L5A2Programming.Areas.Admin.Controllers
             _db = db;
         }
 
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string search)
         {
             var users = await _userManager.Users.Include("Institution").ToListAsync();
             var VMlist = new List<UserRolesViewModel>();
+
+            List<UserRolesViewModel> accounts;
+
             foreach (var user in users)
             {
                 var currentVM = new UserRolesViewModel()
@@ -36,6 +39,8 @@ namespace L5A2Programming.Areas.Admin.Controllers
                 };
                 VMlist.Add(currentVM);
             }
+
+            ViewData["search"] = search;
             return View(VMlist);
         }
 

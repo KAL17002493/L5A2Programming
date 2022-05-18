@@ -28,10 +28,6 @@ namespace L5A2Programming.Areas.Admin.Controllers
         {
             var applicationDbContext = _db.Tickets.Include(t => t.Asset).Include(t => t.Institution).Include(t => t.Room);
 
-            foreach (var ticket in applicationDbContext)
-            {
-                ticket.Comments = await _db.Comments.Where(t => t.TicketId == ticket.Id).Include("User").ToListAsync();
-            }
             return View(await applicationDbContext.ToListAsync());
         }
 
@@ -110,20 +106,21 @@ namespace L5A2Programming.Areas.Admin.Controllers
             return View(ticketModel);
         }
 
-        public async Task<IActionResult> Delete(int id)
+        public async Task<IActionResult> Delete(int id, TicketModel model)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var ticketModel = await _db.Tickets.FindAsync(id);
-            if (ticketModel == null)
+            TicketModel ticketModelDelete = await _db.Tickets.FindAsync(id);
+
+            if(ticketModelDelete == null)
             {
                 return NotFound();
             }
 
-            _db.Tickets.Remove(ticketModel);
+            _db.Tickets.Remove(ticketModelDelete);
             await _db.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
