@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using L5A2Programming.Data;
 using L5A2Programming.Models;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 
 namespace L5A2Programming.Areas.Admin.Controllers
 {
@@ -13,11 +14,13 @@ namespace L5A2Programming.Areas.Admin.Controllers
     {
         private readonly ApplicationDbContext _db;
         private IWebHostEnvironment _webHostEnvironment;
+        private readonly UserManager<CustomUserModel> _userManager;
 
-        public TicketController(ApplicationDbContext db, IWebHostEnvironment webHostEnvironment)
+        public TicketController(ApplicationDbContext db, IWebHostEnvironment webHostEnvironment, UserManager<CustomUserModel> userManager)
         {
             _webHostEnvironment = webHostEnvironment;
             _db = db;
+            _userManager = userManager;
         }
 
         // GET: Admin/Ticket
@@ -91,11 +94,9 @@ namespace L5A2Programming.Areas.Admin.Controllers
                 return NotFound();
             }
 
-            var ticketModel = await _db.Tickets
-                .Include(t => t.Asset)
-                .Include(t => t.Institution)
-                .Include(t => t.Room)
-                .FirstOrDefaultAsync(m => m.Id == id);
+            var ticketModel = await _db.Tickets.Include(t => t.Asset).Include(t => t.Institution).Include(t => t.Room).FirstOrDefaultAsync(m => m.Id == id);
+
+
             if (ticketModel == null)
             {
                 return NotFound();
@@ -125,6 +126,22 @@ namespace L5A2Programming.Areas.Admin.Controllers
         private bool TicketModelExists(int id)
         {
           return (_db.Tickets?.Any(e => e.Id == id)).GetValueOrDefault();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> AddComment(string comment, int id)
+        {
+            var ticket = await _db.Tickets.Where(t => t.Id == id).FirstOrDefaultAsync();
+            ticket.Comments.Add(new CommentModel
+            {
+                Comment = comment,
+                dateTime = DateTime.Now,
+                User = await _userManager.FindByEmailAsync(User.Identity.Name)
+            });
+
+            _db.Tickets.Update(ticket);
+            await _db.SaveChangesAsync();
+            return RedirectToAction(nameof(Details), new {id = ticket.Id});
         }
     }
 }
