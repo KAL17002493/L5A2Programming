@@ -27,6 +27,11 @@ namespace L5A2Programming.Areas.Admin.Controllers
         public async Task<IActionResult> Index()
         {
             var applicationDbContext = _db.Tickets.Include(t => t.Asset).Include(t => t.Institution).Include(t => t.Room);
+
+            foreach (var ticket in applicationDbContext)
+            {
+                ticket.Comments = await _db.Comments.Where(t => t.TicketId == ticket.Id).Include("User").ToListAsync();
+            }
             return View(await applicationDbContext.ToListAsync());
         }
 
@@ -95,7 +100,7 @@ namespace L5A2Programming.Areas.Admin.Controllers
             }
 
             var ticketModel = await _db.Tickets.Include(t => t.Asset).Include(t => t.Institution).Include(t => t.Room).FirstOrDefaultAsync(m => m.Id == id);
-
+            ticketModel.Comments = await _db.Comments.Where(t => t.TicketId == ticketModel.Id).Include("User").OrderByDescending(t => t.dateTime).ToListAsync();
 
             if (ticketModel == null)
             {
@@ -135,6 +140,7 @@ namespace L5A2Programming.Areas.Admin.Controllers
             ticket.Comments.Add(new CommentModel
             {
                 Comment = comment,
+                TicketId = id,
                 dateTime = DateTime.Now,
                 User = await _userManager.FindByEmailAsync(User.Identity.Name)
             });

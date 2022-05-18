@@ -3,6 +3,7 @@ using System;
 using L5A2Programming.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace L5A2Programming.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220518114437_CommentEdit")]
+    partial class CommentEdit
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "6.0.5");
@@ -72,8 +74,8 @@ namespace L5A2Programming.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<int>("TicketId")
-                        .HasColumnType("INTEGER");
+                    b.Property<Guid>("TicketId")
+                        .HasColumnType("TEXT");
 
                     b.Property<int?>("TicketModelId")
                         .HasColumnType("INTEGER");
@@ -183,10 +185,10 @@ namespace L5A2Programming.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@ADMIN.COM",
                             NormalizedUserName = "ADMIN@ADMIN.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAEEsCcv9sZ4K721Qp7vuCvQxcNRoSap0Wti2OH1kPTG9L/fDYeKkf1AuD91ZuOgTkrQ==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEM/sG9aYox10chxwbPfaMa+27eZVOnPNwW4OB8fIP5Dw9gPDVMS4/pCiSnv5HBq7zQ==",
                             PhoneNumberConfirmed = false,
                             SName = "Admin",
-                            SecurityStamp = "4e0b2872-f36a-4e08-bd4e-391107ce72c7",
+                            SecurityStamp = "d20b2905-20ce-4905-9405-28d9c84b52cf",
                             TwoFactorEnabled = false,
                             UserName = "admin@admin.com"
                         });

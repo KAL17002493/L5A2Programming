@@ -3,6 +3,7 @@ using System;
 using L5A2Programming.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace L5A2Programming.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220518113728_CommentsDb")]
+    partial class CommentsDb
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "6.0.5");
@@ -71,9 +73,6 @@ namespace L5A2Programming.Migrations
                     b.Property<string>("Comment")
                         .IsRequired()
                         .HasColumnType("TEXT");
-
-                    b.Property<int>("TicketId")
-                        .HasColumnType("INTEGER");
 
                     b.Property<int?>("TicketModelId")
                         .HasColumnType("INTEGER");
@@ -183,10 +182,10 @@ namespace L5A2Programming.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@ADMIN.COM",
                             NormalizedUserName = "ADMIN@ADMIN.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAEEsCcv9sZ4K721Qp7vuCvQxcNRoSap0Wti2OH1kPTG9L/fDYeKkf1AuD91ZuOgTkrQ==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEL+8bD5ChS//igI/1GpkCsjSBkaEkD4kDK30tADBXWhWtS469F7od8OUBJmraTdaEQ==",
                             PhoneNumberConfirmed = false,
                             SName = "Admin",
-                            SecurityStamp = "4e0b2872-f36a-4e08-bd4e-391107ce72c7",
+                            SecurityStamp = "4c8f1d1b-983e-45ce-9fae-2c943321674a",
                             TwoFactorEnabled = false,
                             UserName = "admin@admin.com"
                         });
