@@ -28,8 +28,6 @@ namespace L5A2Programming.Areas.Admin.Controllers
             var users = await _userManager.Users.Include("Institution").ToListAsync();
             var VMlist = new List<UserRolesViewModel>();
 
-            List<UserRolesViewModel> accounts;
-
             foreach (var user in users)
             {
                 var currentVM = new UserRolesViewModel()
@@ -40,8 +38,13 @@ namespace L5A2Programming.Areas.Admin.Controllers
                 VMlist.Add(currentVM);
             }
 
+            if (search != null)
+            {
+                VMlist = VMlist.Where(u => u.User.Email.ToLower().Contains(search.ToLower())).ToList();
+            }
+
             ViewData["search"] = search;
-            return View(VMlist);
+            return View(VMlist.ToList());
         }
 
         public async Task<IActionResult> Delete(string id)
