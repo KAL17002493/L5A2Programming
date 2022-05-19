@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity;
 
 namespace L5A2Programming.Areas.Admin
 {
@@ -18,6 +19,7 @@ namespace L5A2Programming.Areas.Admin
         {
             _webHostEnvironment = webHostEnvironment;
             _db = db;
+
         }
         public async Task<IActionResult> Index(string search)
         {
@@ -36,7 +38,6 @@ namespace L5A2Programming.Areas.Admin
             return View(assets);
 
         }
-
 
         public IActionResult Create()
         {
