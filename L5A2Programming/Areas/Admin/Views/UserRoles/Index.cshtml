@@ -7,23 +7,57 @@
 
 <h1>User Roles Management</h1>
 
+
+
+
+
+ <div class="container">
+    <div class="row">
+        <div class="col">
+            @*<form method="post" asp-action="AddRole" asp-controller="RolesManager">
+                <div class="input-group">
+                    <input name="roleName" class="form-control" placeholder="Role Name"/>
+                    <span class="input-group-btn">
+                        <button class="btn btn-primary">Add New Role</button>
+                    </span>
+                </div>
+            </form>*@
+        </div>
+        <div class="col">
+
+        <form method="get">
+            <div class="clo">
+                <div class="input-group mb-2">
+                    <input type="text" class="form-control" placeholder="Search by Email" id="search" name="search" value="@ViewData["search"]">
+                    <button class="input-group-text" id="search" type="submit">Search</button>
+                </div>
+            </div>
+        </form>
+
+        </div>
+     </div>
+ </div>
+
+
+
 <table class="table table-striped">
     <thead class="thead-dark">
         <tr>
-            <th>User ID</th>
+            <th>User Email</th>
             <th>First Name</th>
             <th>Surname</th>
             <th>Institution</th>
             <th>Role</th>
             <th>Manage Roles</th>
             <th>Manage Users</th>
+            <th>Actions</th>
         </tr>
     </thead>
     <tbody>
         @foreach (var user in Model)
         {
             <tr>
-                <td>@user.User.Id</td>
+                <td>@user.User.Email</td>
                 <td>@user.User.FName</td>
                 <td>@user.User.SName</td>
                 <td>@user.User.Institution.Name</td>

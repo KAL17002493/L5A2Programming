@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using L5A2Programming.Data;
 using L5A2Programming.Models;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 
 namespace L5A2Programming.Areas.Admin.Controllers
 {
@@ -13,18 +14,31 @@ namespace L5A2Programming.Areas.Admin.Controllers
     {
         private readonly ApplicationDbContext _db;
         private IWebHostEnvironment _webHostEnvironment;
+        private readonly UserManager<CustomUserModel> _userManager;
 
-        public TicketController(ApplicationDbContext db, IWebHostEnvironment webHostEnvironment)
+        public TicketController(ApplicationDbContext db, IWebHostEnvironment webHostEnvironment, UserManager<CustomUserModel> userManager)
         {
             _webHostEnvironment = webHostEnvironment;
             _db = db;
+            _userManager = userManager;
         }
 
         // GET: Admin/Ticket
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string search)
         {
-            var applicationDbContext = _db.Tickets.Include(t => t.Asset).Include(t => t.Institution).Include(t => t.Room);
-            return View(await applicationDbContext.ToListAsync());
+            var tickets = _db.Tickets.Where(t => t.Resolved == false).Include(t => t.Asset).Include(t => t.Institution).Include(t => t.Room);
+
+            if (search != null)
+            {
+                tickets = _db.Tickets.Where(t => t.Asset.AssetName.ToLower().Contains(search.ToLower())).Include(t => t.Asset).Include(t => t.Institution).Include(t => t.Room);
+            }
+
+
+            ViewData["search"] = search;
+            return View(await tickets.ToListAsync());
+
+            //var applicationDbContext = _db.Tickets.Include(t => t.Asset).Include(t => t.Institution).Include(t => t.Room);
+            //return View(await applicationDbContext.ToListAsync());
         }
 
         // GET: Admin/Ticket/Create
@@ -91,11 +105,9 @@ namespace L5A2Programming.Areas.Admin.Controllers
                 return NotFound();
             }
 
-            var ticketModel = await _db.Tickets
-                .Include(t => t.Asset)
-                .Include(t => t.Institution)
-                .Include(t => t.Room)
-                .FirstOrDefaultAsync(m => m.Id == id);
+            var ticketModel = await _db.Tickets.Include(t => t.Asset).Include(t => t.Institution).Include(t => t.Room).FirstOrDefaultAsync(m => m.Id == id);
+            ticketModel.Comments = await _db.Comments.Where(t => t.TicketId == ticketModel.Id).Include("User").OrderByDescending(t => t.dateTime).ToListAsync();
+
             if (ticketModel == null)
             {
                 return NotFound();
@@ -104,20 +116,21 @@ namespace L5A2Programming.Areas.Admin.Controllers
             return View(ticketModel);
         }
 
-        public async Task<IActionResult> Delete(int id)
+        public async Task<IActionResult> Delete(int id, TicketModel model)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var ticketModel = await _db.Tickets.FindAsync(id);
-            if (ticketModel == null)
+            TicketModel ticketModelDelete = await _db.Tickets.FindAsync(id);
+
+            if(ticketModelDelete == null)
             {
                 return NotFound();
             }
 
-            _db.Tickets.Remove(ticketModel);
+            _db.Tickets.Remove(ticketModelDelete);
             await _db.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
@@ -125,6 +138,63 @@ namespace L5A2Programming.Areas.Admin.Controllers
         private bool TicketModelExists(int id)
         {
           return (_db.Tickets?.Any(e => e.Id == id)).GetValueOrDefault();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> AddComment(string comment, int id)
+        {
+
+            var ticket = await _db.Tickets.Where(t => t.Id == id).FirstOrDefaultAsync();
+
+            if (comment != null)
+            {
+                ticket.Comments.Add(new CommentModel
+                {
+                    Comment = comment,
+                    TicketId = id,
+                    dateTime = DateTime.Now,
+                    User = await _userManager.FindByEmailAsync(User.Identity.Name)
+                });
+            }
+            else
+            {
+                return RedirectToAction(nameof(Details), new { id = ticket.Id });
+            }
+
+            _db.Tickets.Update(ticket);
+            await _db.SaveChangesAsync();
+            return RedirectToAction(nameof(Details), new {id = ticket.Id});
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> isResolved(string comment, int id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var model = await _db.Tickets.Where(t => t.Id == id).FirstOrDefaultAsync(x => x.Id == id);
+
+            if (model != null)
+            {
+                model.Comments.Add(new CommentModel
+                {
+                    Comment = comment,
+                    TicketId = id,
+                    dateTime = DateTime.Now,
+                    User = await _userManager.FindByEmailAsync(User.Identity.Name)
+                });
+            }
+            else
+            {
+                return RedirectToAction(nameof(Details), new { id = model.Id });
+            }
+
+            model.Resolved = true;
+            _db.Tickets.Update(model);
+            await _db.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
         }
     }
 }

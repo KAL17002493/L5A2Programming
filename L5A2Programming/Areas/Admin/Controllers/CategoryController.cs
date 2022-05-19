@@ -124,22 +124,12 @@ namespace OnlineShop2022.Areas.Admin
                 return NotFound();
             }
 
-            var categoryModel = await _context.Categories
-                .FirstOrDefaultAsync(m => m.Id == id);
+            var categoryModel = await _context.Categories.FirstOrDefaultAsync(m => m.Id == id);
             if (categoryModel == null)
             {
                 return NotFound();
             }
 
-            return View(categoryModel);
-        }
-
-        // POST: Admin/Category/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
-        {
-            var categoryModel = await _context.Categories.FindAsync(id);
             _context.Categories.Remove(categoryModel);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));

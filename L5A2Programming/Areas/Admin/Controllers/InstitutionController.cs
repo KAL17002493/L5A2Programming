@@ -115,34 +115,25 @@ namespace OnlineShop2022.Areas.Admin
         }
 
         // GET: Admin/Institution/Delete/5
-        public async Task<IActionResult> Delete(int? id)
+        public async Task<IActionResult> Delete(int? id, InstitutionModel model)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var institutionsModel = await _context.Institutions
-                .FirstOrDefaultAsync(m => m.Id == id);
+            var institutionsModel = await _context.Institutions.FirstOrDefaultAsync(m => m.Id == id);
             if (institutionsModel == null)
             {
                 return NotFound();
             }
 
-            return View(institutionsModel);
-        }
-
-        // POST: Admin/Institution/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
-        {
-            var institutionsModel = await _context.Institutions.FindAsync(id);
             _context.Institutions.Remove(institutionsModel);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
+      
         private bool InstitutionModelExists(int id)
         {
             return _context.Institutions.Any(e => e.Id == id);

@@ -23,10 +23,11 @@ namespace L5A2Programming.Areas.Admin.Controllers
             _db = db;
         }
 
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string search)
         {
             var users = await _userManager.Users.Include("Institution").ToListAsync();
             var VMlist = new List<UserRolesViewModel>();
+
             foreach (var user in users)
             {
                 var currentVM = new UserRolesViewModel()
@@ -36,7 +37,14 @@ namespace L5A2Programming.Areas.Admin.Controllers
                 };
                 VMlist.Add(currentVM);
             }
-            return View(VMlist);
+
+            if (search != null)
+            {
+                VMlist = VMlist.Where(u => u.User.Email.ToLower().Contains(search.ToLower())).ToList();
+            }
+
+            ViewData["search"] = search;
+            return View(VMlist.ToList());
         }
 
         public async Task<IActionResult> Delete(string id)

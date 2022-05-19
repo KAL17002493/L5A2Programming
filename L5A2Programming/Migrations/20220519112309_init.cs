@@ -52,19 +52,6 @@ namespace L5A2Programming.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Rooms",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "INTEGER", nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
-                    Name = table.Column<string>(type: "TEXT", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Rooms", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "AspNetRoleClaims",
                 columns: table => new
                 {
@@ -120,35 +107,21 @@ namespace L5A2Programming.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Assets",
+                name: "Rooms",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    AssetName = table.Column<string>(type: "TEXT", nullable: false),
-                    CategoryId = table.Column<int>(type: "INTEGER", nullable: false),
-                    InstitutionId = table.Column<int>(type: "INTEGER", nullable: false),
-                    RoomId = table.Column<int>(type: "INTEGER", nullable: false)
+                    Name = table.Column<string>(type: "TEXT", nullable: false),
+                    InstitutionId = table.Column<int>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Assets", x => x.Id);
+                    table.PrimaryKey("PK_Rooms", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Assets_Categories_CategoryId",
-                        column: x => x.CategoryId,
-                        principalTable: "Categories",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Assets_Institutions_InstitutionId",
+                        name: "FK_Rooms_Institutions_InstitutionId",
                         column: x => x.InstitutionId,
                         principalTable: "Institutions",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Assets_Rooms_RoomId",
-                        column: x => x.RoomId,
-                        principalTable: "Rooms",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -239,6 +212,40 @@ namespace L5A2Programming.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Assets",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    AssetName = table.Column<string>(type: "TEXT", nullable: false),
+                    CategoryId = table.Column<int>(type: "INTEGER", nullable: false),
+                    InstitutionId = table.Column<int>(type: "INTEGER", nullable: false),
+                    RoomId = table.Column<int>(type: "INTEGER", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Assets", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Assets_Categories_CategoryId",
+                        column: x => x.CategoryId,
+                        principalTable: "Categories",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Assets_Institutions_InstitutionId",
+                        column: x => x.InstitutionId,
+                        principalTable: "Institutions",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Assets_Rooms_RoomId",
+                        column: x => x.RoomId,
+                        principalTable: "Rooms",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Tickets",
                 columns: table => new
                 {
@@ -275,27 +282,28 @@ namespace L5A2Programming.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "CommentModel",
+                name: "Comments",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
+                    TicketId = table.Column<int>(type: "INTEGER", nullable: false),
                     Comment = table.Column<string>(type: "TEXT", nullable: false),
                     dateTime = table.Column<DateTime>(type: "TEXT", nullable: false),
-                    customUserId = table.Column<string>(type: "TEXT", nullable: false),
+                    UserId = table.Column<string>(type: "TEXT", nullable: false),
                     TicketModelId = table.Column<int>(type: "INTEGER", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_CommentModel", x => x.Id);
+                    table.PrimaryKey("PK_Comments", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_CommentModel_AspNetUsers_customUserId",
-                        column: x => x.customUserId,
+                        name: "FK_Comments_AspNetUsers_UserId",
+                        column: x => x.UserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_CommentModel_Tickets_TicketModelId",
+                        name: "FK_Comments_Tickets_TicketModelId",
                         column: x => x.TicketModelId,
                         principalTable: "Tickets",
                         principalColumn: "Id");
@@ -334,7 +342,7 @@ namespace L5A2Programming.Migrations
             migrationBuilder.InsertData(
                 table: "AspNetUsers",
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "FName", "InstitutionId", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SName", "SecurityStamp", "TwoFactorEnabled", "UserName" },
-                values: new object[] { "143d3180-1104-46f0-8646-62d630056f42", 0, "231728ec-ceef-4de5-8c95-7f82a488cc0d", "admin@admin.com", false, "Admin", 1, false, null, "ADMIN@ADMIN.COM", "ADMIN@ADMIN.COM", "AQAAAAEAACcQAAAAEKFO7xclI+R0L4l7GqPmc5DRqcKbjZ21N2lZDAGBtMutR4hIlRs0lzCaoHfUdNz78g==", null, false, "Admin", "ebce78ee-586f-4ff4-a71f-d7fd087a56be", false, "admin@admin.com" });
+                values: new object[] { "143d3180-1104-46f0-8646-62d630056f42", 0, "231728ec-ceef-4de5-8c95-7f82a488cc0d", "admin@admin.com", false, "Admin", 1, false, null, "ADMIN@ADMIN.COM", "ADMIN@ADMIN.COM", "AQAAAAEAACcQAAAAEAhFh4ESjoPHh6HBl1dlqudLFx55Pmxe5SMYxDdVh6Xm0+E8onXqyAnSZ+btwg+nBg==", null, false, "Admin", "f132559d-9f5d-4149-b4b2-ec8d135c47f9", false, "admin@admin.com" });
 
             migrationBuilder.InsertData(
                 table: "AspNetUserRoles",
@@ -399,14 +407,19 @@ namespace L5A2Programming.Migrations
                 column: "RoomId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_CommentModel_customUserId",
-                table: "CommentModel",
-                column: "customUserId");
+                name: "IX_Comments_TicketModelId",
+                table: "Comments",
+                column: "TicketModelId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_CommentModel_TicketModelId",
-                table: "CommentModel",
-                column: "TicketModelId");
+                name: "IX_Comments_UserId",
+                table: "Comments",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Rooms_InstitutionId",
+                table: "Rooms",
+                column: "InstitutionId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Tickets_AssetId",
@@ -442,7 +455,7 @@ namespace L5A2Programming.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
-                name: "CommentModel");
+                name: "Comments");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
@@ -460,10 +473,10 @@ namespace L5A2Programming.Migrations
                 name: "Categories");
 
             migrationBuilder.DropTable(
-                name: "Institutions");
+                name: "Rooms");
 
             migrationBuilder.DropTable(
-                name: "Rooms");
+                name: "Institutions");
         }
     }
 }

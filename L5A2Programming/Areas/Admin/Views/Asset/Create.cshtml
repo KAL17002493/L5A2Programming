@@ -7,7 +7,7 @@
         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
         <div class="">
             <div class="mb-3">
-                <label for="Asset.AssetName" class="form-label">Description</label>
+                <label for="Asset.AssetName" class="form-label">Asset Name</label>
                 <input asp-for="Asset.AssetName" type="text" class="form-control" id="Asset.AssetName" placeholder="Asset Name" name="Asset.AssetName">
                 <span asp-validation-for="Asset.AssetName" class="text-danger"></span>
             </div>
@@ -24,13 +24,13 @@
                 <span asp-validation-for="Asset.CategoryId" class="text-danger"></span>
             </div>
 
-
+            
             <div class="mb-3">
                  <label for="" class="form-label">Institution</label>
                 @Html.DropDownListFor(m => m.Asset.InstitutionId, Model.Institution, "Select an Institution", new {@class = "form-select"})
                 <span asp-validation-for="Asset.InstitutionId" class="text-danger"></span>
             </div>
-
+            
 
             <div class="mb-3">
                 <button class="btn btn-primary" type="submit">Add Asset</button>

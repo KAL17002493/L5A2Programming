@@ -4,24 +4,19 @@
 @{
     ViewData["Title"] = "ManageInstitution";
 }
-    <h1>Update</h1>
-
-    
-
-
+<div class="row">
     <form method="post">
-        <div class="card">
-        <div class="card-header">
+    
             <h2>Manage @Model.User.FName 's Institution</h2>
-        </div>
-        <input type="hidden" asp-for="@Model.User.Id" />
-        <div class="">
-            @Html.DropDownListFor(m => m.User.InstitutionId, Model.Institution, "Select an Institution", new {@class = "form-select"})
-        </div>
+            <input type="hidden" asp-for="@Model.User.Id" />
 
-        <div class="card-footer">
-            <button class="btn btn-secondary" type="submit">Update</button>
-            <a class="btn btn-danger" asp-action="Index">Cancel</a>
-        </div>
-        </div>           
+            <div class="m-3">
+                @Html.DropDownListFor(m => m.User.InstitutionId, Model.Institution, "Select an Institution", new {@class = "form-select"})
+            </div>
+            <div>
+                <button class="btn btn-secondary" type="submit">Update</button>
+                <a class="btn btn-danger" asp-action="Index">Cancel</a>
+            </div>
+     
     </form>
+</div>    

@@ -2,6 +2,7 @@
 using L5A2Programming.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 
 namespace L5A2Programming.Areas.Admin
@@ -20,7 +21,9 @@ namespace L5A2Programming.Areas.Admin
         // GET: Admin/Room
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Rooms.ToListAsync());
+            var rooms = await _context.Rooms.Include("Institution").ToListAsync();
+
+            return View(rooms);
         }
 
         // GET: Admin/Room/Details/5
@@ -44,7 +47,15 @@ namespace L5A2Programming.Areas.Admin
         // GET: Admin/Room/Create
         public IActionResult Create()
         {
-            return View();
+            RoomViewModel roomViewModel = new RoomViewModel()
+            {
+                Institution = _context.Institutions.Select(i => new SelectListItem
+                {
+                    Text = i.Name,
+                    Value = i.Id.ToString()
+                })
+            };
+            return View(roomViewModel);
         }
 
         // POST: Admin/Room/Create
@@ -52,15 +63,13 @@ namespace L5A2Programming.Areas.Admin
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name")] RoomModel RoomsModel)
+        public async Task<IActionResult> Create(RoomViewModel roomViewModel)
         {
-            if (ModelState.IsValid)
-            {
-                _context.Add(RoomsModel);
+
+                await _context.Rooms.AddAsync(roomViewModel.Room);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
-            }
-            return View(RoomsModel);
+
         }
 
         // GET: Admin/Room/Edit/5
@@ -71,22 +80,31 @@ namespace L5A2Programming.Areas.Admin
                 return NotFound();
             }
 
-            var RoomsModel = await _context.Rooms.FindAsync(id);
-            if (RoomsModel == null)
+            RoomModel roomModel = await _context.Rooms.FindAsync(id);
+            if (roomModel == null)
             {
                 return NotFound();
             }
-            return View(RoomsModel);
+
+            var roomViewModel = new RoomViewModel()
+            {
+                Institution = _context.Institutions.Select(i => new SelectListItem
+                {
+                    Text = i.Name,
+                    Value = i.Id.ToString()
+                }),
+                Room = roomModel
+            };
+            return View(roomViewModel);
         }
 
         // POST: Admin/Indsitution/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name")] RoomModel RoomsModel)
+        public async Task<IActionResult> Edit(int id, RoomViewModel roomViewModel)
         {
-            if (id != RoomsModel.Id)
+            if (id != roomViewModel.Room.Id)
             {
                 return NotFound();
             }
@@ -95,12 +113,12 @@ namespace L5A2Programming.Areas.Admin
             {
                 try
                 {
-                    _context.Update(RoomsModel);
+                    _context.Update(roomViewModel);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!RoomModelExists(RoomsModel.Id))
+                    if (!RoomModelExists(roomViewModel.Room.Id))
                     {
                         return NotFound();
                     }
@@ -111,7 +129,7 @@ namespace L5A2Programming.Areas.Admin
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(RoomsModel);
+            return View(roomViewModel);
         }
 
         // GET: Admin/Room/Delete/5

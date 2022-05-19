@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace L5A2Programming.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20220517142123_init")]
+    [Migration("20220519112309_init")]
     partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -74,10 +74,13 @@ namespace L5A2Programming.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
+                    b.Property<int>("TicketId")
+                        .HasColumnType("INTEGER");
+
                     b.Property<int?>("TicketModelId")
                         .HasColumnType("INTEGER");
 
-                    b.Property<string>("customUserId")
+                    b.Property<string>("UserId")
                         .IsRequired()
                         .HasColumnType("TEXT");
 
@@ -88,9 +91,9 @@ namespace L5A2Programming.Migrations
 
                     b.HasIndex("TicketModelId");
 
-                    b.HasIndex("customUserId");
+                    b.HasIndex("UserId");
 
-                    b.ToTable("CommentModel");
+                    b.ToTable("Comments");
                 });
 
             modelBuilder.Entity("L5A2Programming.Models.CustomUserModel", b =>
@@ -182,10 +185,10 @@ namespace L5A2Programming.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@ADMIN.COM",
                             NormalizedUserName = "ADMIN@ADMIN.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAEKFO7xclI+R0L4l7GqPmc5DRqcKbjZ21N2lZDAGBtMutR4hIlRs0lzCaoHfUdNz78g==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEAhFh4ESjoPHh6HBl1dlqudLFx55Pmxe5SMYxDdVh6Xm0+E8onXqyAnSZ+btwg+nBg==",
                             PhoneNumberConfirmed = false,
                             SName = "Admin",
-                            SecurityStamp = "ebce78ee-586f-4ff4-a71f-d7fd087a56be",
+                            SecurityStamp = "f132559d-9f5d-4149-b4b2-ec8d135c47f9",
                             TwoFactorEnabled = false,
                             UserName = "admin@admin.com"
                         });
@@ -229,11 +232,16 @@ namespace L5A2Programming.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
+                    b.Property<int>("InstitutionId")
+                        .HasColumnType("INTEGER");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("InstitutionId");
 
                     b.ToTable("Rooms");
                 });
@@ -479,16 +487,27 @@ namespace L5A2Programming.Migrations
                         .WithMany("Comments")
                         .HasForeignKey("TicketModelId");
 
-                    b.HasOne("L5A2Programming.Models.CustomUserModel", "customUser")
+                    b.HasOne("L5A2Programming.Models.CustomUserModel", "User")
                         .WithMany()
-                        .HasForeignKey("customUserId")
+                        .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("customUser");
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("L5A2Programming.Models.CustomUserModel", b =>
+                {
+                    b.HasOne("L5A2Programming.Models.InstitutionModel", "Institution")
+                        .WithMany()
+                        .HasForeignKey("InstitutionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Institution");
+                });
+
+            modelBuilder.Entity("L5A2Programming.Models.RoomModel", b =>
                 {
                     b.HasOne("L5A2Programming.Models.InstitutionModel", "Institution")
                         .WithMany()

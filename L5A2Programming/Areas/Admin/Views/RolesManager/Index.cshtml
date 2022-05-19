@@ -3,22 +3,47 @@
 @{
     ViewData["Title"] = "Role Manager";
 }
-<h1>Roles Management</h1>
+<h1>Roles Overview</h1>
 
-<form method="post" asp-action="AddRole" asp-controller="RolesManager">
-    <div class="input-group">
-        <input name="roleName" class="form-control w-25" />
-        <span class="input-group-btn">
-            <button class="btn btn-info">Add New Role</button>
-        </span>
-    </div>
-</form>
+
+
+
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <form method="post" asp-action="AddRole" asp-controller="RolesManager">
+                <div class="input-group">
+                    <input name="roleName" class="form-control" placeholder="Role Name"/>
+                    <span class="input-group-btn">
+                        <button class="btn btn-primary">Add New Role</button>
+                    </span>
+                </div>
+            </form>
+        </div>
+        <div class="col">
+
+        @*<form method="post" asp-action="Create" asp-controller="Category">
+            <div class="input-group">
+                <input name="Name" class="form-control" />
+                <span class="input-group-btn">
+                    <button class="btn btn-primary">Add Category</button>
+                </span>
+            </div>
+        </form>*@
+
+        </div>
+     </div>
+ </div>
+
+
+
 
 <table class="table table-striped">
     <thead class="thead-dark">
         <tr>
             <th>ID</th>
             <th>Role</th>
+            <th>Actions</th>
         </tr>
         
     </thead>
