@@ -24,11 +24,21 @@ namespace L5A2Programming.Areas.Admin.Controllers
         }
 
         // GET: Admin/Ticket
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string search)
         {
-            var applicationDbContext = _db.Tickets.Include(t => t.Asset).Include(t => t.Institution).Include(t => t.Room);
+            var tickets = _db.Tickets.Include(t => t.Asset).Include(t => t.Institution).Include(t => t.Room);
 
-            return View(await applicationDbContext.ToListAsync());
+            if (search != null)
+            {
+                tickets = _db.Tickets.Where(t => t.Asset.AssetName.ToLower().Contains(search.ToLower())).Include(t => t.Asset).Include(t => t.Institution).Include(t => t.Room);
+            }
+
+
+            ViewData["search"] = search;
+            return View(await tickets.ToListAsync());
+
+            //var applicationDbContext = _db.Tickets.Include(t => t.Asset).Include(t => t.Institution).Include(t => t.Room);
+            //return View(await applicationDbContext.ToListAsync());
         }
 
         // GET: Admin/Ticket/Create
