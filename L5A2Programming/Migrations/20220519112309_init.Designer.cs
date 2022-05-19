@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace L5A2Programming.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20220518111805_comments")]
-    partial class comments
+    [Migration("20220519112309_init")]
+    partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -74,6 +74,9 @@ namespace L5A2Programming.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
+                    b.Property<int>("TicketId")
+                        .HasColumnType("INTEGER");
+
                     b.Property<int?>("TicketModelId")
                         .HasColumnType("INTEGER");
 
@@ -90,7 +93,7 @@ namespace L5A2Programming.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("CommentModel");
+                    b.ToTable("Comments");
                 });
 
             modelBuilder.Entity("L5A2Programming.Models.CustomUserModel", b =>
@@ -182,10 +185,10 @@ namespace L5A2Programming.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@ADMIN.COM",
                             NormalizedUserName = "ADMIN@ADMIN.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAEHy2n3E9w+jJYci98g8seEmMLJXpOAYmFe6MqgJhaOtaaCrvPRMUPtU/FKfv8yWMgA==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEAhFh4ESjoPHh6HBl1dlqudLFx55Pmxe5SMYxDdVh6Xm0+E8onXqyAnSZ+btwg+nBg==",
                             PhoneNumberConfirmed = false,
                             SName = "Admin",
-                            SecurityStamp = "3f69db73-af82-4110-be00-a51dfc29a649",
+                            SecurityStamp = "f132559d-9f5d-4149-b4b2-ec8d135c47f9",
                             TwoFactorEnabled = false,
                             UserName = "admin@admin.com"
                         });
@@ -229,11 +232,16 @@ namespace L5A2Programming.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
+                    b.Property<int>("InstitutionId")
+                        .HasColumnType("INTEGER");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("InstitutionId");
 
                     b.ToTable("Rooms");
                 });
@@ -489,6 +497,17 @@ namespace L5A2Programming.Migrations
                 });
 
             modelBuilder.Entity("L5A2Programming.Models.CustomUserModel", b =>
+                {
+                    b.HasOne("L5A2Programming.Models.InstitutionModel", "Institution")
+                        .WithMany()
+                        .HasForeignKey("InstitutionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Institution");
+                });
+
+            modelBuilder.Entity("L5A2Programming.Models.RoomModel", b =>
                 {
                     b.HasOne("L5A2Programming.Models.InstitutionModel", "Institution")
                         .WithMany()

@@ -183,10 +183,10 @@ namespace L5A2Programming.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@ADMIN.COM",
                             NormalizedUserName = "ADMIN@ADMIN.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAEDyloPJLY5IJ3xfhniw9fwMgNJ3TtDDJc7R3Nprkfl0LV2WT6MY0g7L0Idt4+rfWdA==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEAhFh4ESjoPHh6HBl1dlqudLFx55Pmxe5SMYxDdVh6Xm0+E8onXqyAnSZ+btwg+nBg==",
                             PhoneNumberConfirmed = false,
                             SName = "Admin",
-                            SecurityStamp = "00409f47-1249-4f75-b8ef-1e46ac8c443e",
+                            SecurityStamp = "f132559d-9f5d-4149-b4b2-ec8d135c47f9",
                             TwoFactorEnabled = false,
                             UserName = "admin@admin.com"
                         });
@@ -230,11 +230,16 @@ namespace L5A2Programming.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
+                    b.Property<int>("InstitutionId")
+                        .HasColumnType("INTEGER");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("InstitutionId");
 
                     b.ToTable("Rooms");
                 });
@@ -490,6 +495,17 @@ namespace L5A2Programming.Migrations
                 });
 
             modelBuilder.Entity("L5A2Programming.Models.CustomUserModel", b =>
+                {
+                    b.HasOne("L5A2Programming.Models.InstitutionModel", "Institution")
+                        .WithMany()
+                        .HasForeignKey("InstitutionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Institution");
+                });
+
+            modelBuilder.Entity("L5A2Programming.Models.RoomModel", b =>
                 {
                     b.HasOne("L5A2Programming.Models.InstitutionModel", "Institution")
                         .WithMany()

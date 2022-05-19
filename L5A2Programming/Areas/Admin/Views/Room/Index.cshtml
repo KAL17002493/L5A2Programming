@@ -1,7 +1,7 @@
-﻿@model IEnumerable<L5A2Programming.Models.RoomModel>
+﻿@model IEnumerable<RoomModel>
 
 @{
-    ViewData["Title"] = "Room Management";
+    ViewData["Title"] = "Room Overview";
 }
 
 <h1>Room Overview</h1>
@@ -14,39 +14,40 @@
             </div>
         </div>
         <div class="col">
-            <form method="get">
+            @*<form method="get">
                     <div class="input-group">
-                        <input type="text" class="form-control" placeholder="Search by asset Name" id="search" name="search" value="@ViewData["search"]">
+                        <input type="text" class="form-control" placeholder="Search by Room Lable" id="search" name="search" value="@ViewData["search"]">
                         <button class="input-group-text" id="search" type="submit">Search</button>
                     </div>
-            </form>
+            </form>*@
         </div>
      </div>
  </div>
 
-<p>
-    <a asp-action="Create" class="btn btn-primary">Create New</a>
-</p>
-<table class="table">
+<table class="table table-striped">
     <thead>
         <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Name)
-            </th>
-            <th></th>
+            <th scope="col">#</th>
+            <th scope="col">Room Lable</th>
+            <th scope="col">Institution</th>
+            <th scope="col">Actions</th>
         </tr>
     </thead>
+
     <tbody>
-@foreach (var item in Model) {
+
+        @foreach (var room in Model) {
         <tr>
+            <th scope="row">@room.Id</th>
+            <td>@room.Name</td>
+            <td>@room.Institution.Name</td>
+
             <td>
-                @Html.DisplayFor(modelItem => item.Name)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-primary">Edit</a> 
-                <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger">Delete</a>
+                <a asp-controller="Room" asp-action="Edit" asp-route-id="@room.Id" class="btn btn-secondary">Edit</a> 
+                <a asp-controller="Room" asp-action="Delete" asp-route-id="@room.Id" class="btn btn-danger">Delete</a>
             </td>
         </tr>
 }
     </tbody>
+
 </table>

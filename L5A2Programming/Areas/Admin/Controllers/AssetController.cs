@@ -70,6 +70,35 @@ namespace L5A2Programming.Areas.Admin
                 return RedirectToAction(nameof(Index));
         }
 
+
+        //GET
+        public async Task<IActionResult> Update(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            AssetModel currentAsset = await _db.Assets.FindAsync(id);
+
+            if (currentAsset == null)
+            {
+                return NotFound();
+            }
+
+            var assetViewModel = new AssetViewModel()
+            {
+                Categories = _db.Categories.Select(i => new SelectListItem
+                {
+                    Text = i.Name,
+                    Value = i.Id.ToString()
+                }),
+                Asset = currentAsset
+            };
+
+            return View(assetViewModel);
+        }
+
         [HttpPost]
         public async Task<IActionResult> Update(int id, AssetViewModel assetViewModel)
         {
@@ -102,33 +131,7 @@ namespace L5A2Programming.Areas.Admin
             return View(assetViewModel);
         }
 
-        //GET
-        public async Task<IActionResult> Update(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
 
-            AssetModel currentAsset = await _db.Assets.FindAsync(id);
-
-            if (currentAsset == null)
-            {
-                return NotFound();
-            }
-
-            var assetViewModel = new AssetViewModel()
-            {
-                Categories = _db.Categories.Select(i => new SelectListItem
-                {
-                    Text = i.Name,
-                    Value = i.Id.ToString()
-                }),
-                Asset = currentAsset
-            };
-
-            return View(assetViewModel);
-        }
 
         public async Task<IActionResult> Delete(int? id, AssetModel model)
         {
