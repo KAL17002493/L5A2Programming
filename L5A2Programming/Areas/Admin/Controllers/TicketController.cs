@@ -26,7 +26,7 @@ namespace L5A2Programming.Areas.Admin.Controllers
         // GET: Admin/Ticket
         public async Task<IActionResult> Index(string search)
         {
-            var tickets = _db.Tickets.Include(t => t.Asset).Include(t => t.Institution).Include(t => t.Room);
+            var tickets = _db.Tickets.Where(t => t.Resolved == false).Include(t => t.Asset).Include(t => t.Institution).Include(t => t.Room);
 
             if (search != null)
             {
@@ -140,11 +140,6 @@ namespace L5A2Programming.Areas.Admin.Controllers
           return (_db.Tickets?.Any(e => e.Id == id)).GetValueOrDefault();
         }
 
-
-
-
-
-
         [HttpPost]
         public async Task<IActionResult> AddComment(string comment, int id)
         {
@@ -169,6 +164,37 @@ namespace L5A2Programming.Areas.Admin.Controllers
             _db.Tickets.Update(ticket);
             await _db.SaveChangesAsync();
             return RedirectToAction(nameof(Details), new {id = ticket.Id});
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> isResolved(string comment, int id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var model = await _db.Tickets.Where(t => t.Id == id).FirstOrDefaultAsync(x => x.Id == id);
+
+            if (model != null)
+            {
+                model.Comments.Add(new CommentModel
+                {
+                    Comment = comment,
+                    TicketId = id,
+                    dateTime = DateTime.Now,
+                    User = await _userManager.FindByEmailAsync(User.Identity.Name)
+                });
+            }
+            else
+            {
+                return RedirectToAction(nameof(Details), new { id = model.Id });
+            }
+
+            model.Resolved = true;
+            _db.Tickets.Update(model);
+            await _db.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
         }
     }
 }

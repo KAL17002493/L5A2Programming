@@ -17,6 +17,8 @@ namespace L5A2Programming.Models
 
         public bool Resolved { get; set; }
 
+        public string Message { get; set; }
+
         public List<CommentModel> Comments { get; set; } = new List<CommentModel>();
 
         public int InstitutionId { get; set; }

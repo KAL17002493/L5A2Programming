@@ -1,6 +1,6 @@
 ﻿@model L5A2Programming.Models.TicketViewModel
 
-<h1>Create</h1>
+<h1>Create a ticket</h1>
 
 <div class="container">
     <form method="post" asp-action="Create" enctype="multipart/form-data">
@@ -26,9 +26,13 @@
                 <span asp-validation-for="Ticket.InstitutionId" class="text-danger"></span>
             </div>
 
+            <div class="mb-3">
+              <label for="Ticket.Message" class="form-label">Message</label>
+              <textarea asp-for="Ticket.Message" class="form-control" id="Ticket.Message" placeholdereadonly="Reason for creating a ticket" rows="3"></textarea>
+            </div>
 
             <div class="mb-3">
-                <button class="btn btn-primary" type="submit">Add Asset</button>
+                <button class="btn btn-primary" type="submit">Create Ticket</button>
             </div>
         </div>
     </form>

@@ -24,13 +24,13 @@
                 <span asp-validation-for="Asset.CategoryId" class="text-danger"></span>
             </div>
 
-
+            
             <div class="mb-3">
                  <label for="" class="form-label">Institution</label>
                 @Html.DropDownListFor(m => m.Asset.InstitutionId, Model.Institution, "Select an Institution", new {@class = "form-select"})
                 <span asp-validation-for="Asset.InstitutionId" class="text-danger"></span>
             </div>
-
+            
 
             <div class="mb-3">
                 <button class="btn btn-primary" type="submit">Add Asset</button>
