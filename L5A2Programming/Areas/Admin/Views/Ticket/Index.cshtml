@@ -4,20 +4,25 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
+<h1>Ticket Overview</h1>
 
-<h1>Ticket Management</h1>
-
- <form method="get">
- <div class="clo">
-                <div class="input-group mb-2">
-                    <input type="text" class="form-control" placeholder="search" id="search" name="search" value="@ViewData["search"]">
-                    <button class="input-group-text" id="search" type="submit">Search</button>
-                </div>
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <div class="d-grid gap-2">
+            <a class="btn btn-primary" asp-action="Create">New Ticket</a>
             </div>
+        </div>
+        <div class="col">
+            <form method="get">
+                    <div class="input-group">
+                        <input type="text" class="form-control" placeholder="Search ticket by Asset Name" id="search" name="search" value="@ViewData["search"]">
+                        <button class="input-group-text" id="search" type="submit">Search</button>
+                    </div>
             </form>
-
- <a class="btn btn-primary mb-3" asp-action="Create">New Ticket</a>
+        </div>
+     </div>
+ </div>
 
 <table class="table table-striped">
     <thead>

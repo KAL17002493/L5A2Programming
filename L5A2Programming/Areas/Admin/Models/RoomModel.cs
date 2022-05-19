@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace L5A2Programming.Models
 {
@@ -9,5 +10,9 @@ namespace L5A2Programming.Models
 
         [Required]
         public string Name { get; set; }
+
+        public int InstitutionId { get; set; }
+        [ForeignKey("InstitutionId")]
+        public InstitutionModel Institution { get; set; }
     }
 }

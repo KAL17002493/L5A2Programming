@@ -140,17 +140,31 @@ namespace L5A2Programming.Areas.Admin.Controllers
           return (_db.Tickets?.Any(e => e.Id == id)).GetValueOrDefault();
         }
 
+
+
+
+
+
         [HttpPost]
         public async Task<IActionResult> AddComment(string comment, int id)
         {
+
             var ticket = await _db.Tickets.Where(t => t.Id == id).FirstOrDefaultAsync();
-            ticket.Comments.Add(new CommentModel
+
+            if (comment != null)
             {
-                Comment = comment,
-                TicketId = id,
-                dateTime = DateTime.Now,
-                User = await _userManager.FindByEmailAsync(User.Identity.Name)
-            });
+                ticket.Comments.Add(new CommentModel
+                {
+                    Comment = comment,
+                    TicketId = id,
+                    dateTime = DateTime.Now,
+                    User = await _userManager.FindByEmailAsync(User.Identity.Name)
+                });
+            }
+            else
+            {
+                return RedirectToAction(nameof(Details), new { id = ticket.Id });
+            }
 
             _db.Tickets.Update(ticket);
             await _db.SaveChangesAsync();
