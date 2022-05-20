@@ -9,20 +9,22 @@ using Microsoft.AspNetCore.Identity;
 namespace L5A2Programming.Areas.Admin
 {
     [Area("Admin")]
-    [Authorize(Roles = "Admin")]
     public class AssetController : Controller
     {
         private readonly ApplicationDbContext _db;
         private IWebHostEnvironment _webHostEnvironment;
+        private readonly UserManager<CustomUserModel> _userManager;
 
-        public AssetController(ApplicationDbContext db, IWebHostEnvironment webHostEnvironment)
+        public AssetController(ApplicationDbContext db, IWebHostEnvironment webHostEnvironment, UserManager<CustomUserModel> userManager)
         {
             _webHostEnvironment = webHostEnvironment;
             _db = db;
-
+            _userManager = userManager;
         }
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Index(string search)
         {
+
             List<AssetModel> assets;
 
             if (search != null)
@@ -37,6 +39,25 @@ namespace L5A2Programming.Areas.Admin
             ViewData["search"] = search;
             return View(assets);
 
+        }
+        [Authorize(Roles = "Admin, Institution Manager, Institution manager, Other, Receptionist, ")]
+        public async Task<IActionResult> UserIndex(string search)
+        {
+            var currentUser = await _userManager.GetUserAsync(User);
+
+            List<AssetModel> assets;
+
+            if (search != null)
+            {
+                assets = await _db.Assets.Where(a => a.AssetName.ToLower().Contains(search.ToLower()) && a.InstitutionId == currentUser.InstitutionId).Include("Category").Include("Institution").Include("Room").ToListAsync();
+            }
+            else
+            {
+                assets = await _db.Assets.Where(a => a.InstitutionId == currentUser.InstitutionId).Include("Category").Include("Institution").Include("Room").ToListAsync();
+            }
+
+            ViewData["search"] = search;
+            return View(assets);
         }
 
         public IActionResult Create()

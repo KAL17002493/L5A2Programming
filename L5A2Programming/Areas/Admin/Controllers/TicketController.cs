@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Identity;
 namespace L5A2Programming.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    [Authorize(Roles = "Admin, Estate Staff")]
+
     public class TicketController : Controller
     {
         private readonly ApplicationDbContext _db;
@@ -22,7 +22,7 @@ namespace L5A2Programming.Areas.Admin.Controllers
             _db = db;
             _userManager = userManager;
         }
-
+        [Authorize(Roles = "Admin, Estate Staff")]
         // GET: Admin/Ticket
         public async Task<IActionResult> Index(string search)
         {
@@ -39,6 +39,21 @@ namespace L5A2Programming.Areas.Admin.Controllers
 
             //var applicationDbContext = _db.Tickets.Include(t => t.Asset).Include(t => t.Institution).Include(t => t.Room);
             //return View(await applicationDbContext.ToListAsync());
+        }
+
+        public async Task<IActionResult> UserIndex(string search)
+        {
+            var currentUser = await _userManager.GetUserAsync(User);
+            var tickets = _db.Tickets.Where(t => t.Resolved == false && t.InstitutionId == currentUser.InstitutionId).Include(t => t.Asset).Include(t => t.Institution).Include(t => t.Room);
+
+            if (search != null)
+            {
+                tickets = _db.Tickets.Where(t => t.Asset.AssetName.ToLower().Contains(search.ToLower()) && t.InstitutionId == currentUser.InstitutionId ).Include(t => t.Asset).Include(t => t.Institution).Include(t => t.Room);
+            }
+
+
+            ViewData["search"] = search;
+            return View(await tickets.ToListAsync());
         }
 
         // GET: Admin/Ticket/Create
@@ -69,14 +84,29 @@ namespace L5A2Programming.Areas.Admin.Controllers
         [HttpPost]
         public async Task<IActionResult> Create(TicketViewModel ticketViewModel)
         {
+            var currentUser = await _userManager.GetUserAsync(User);
+
             ticketViewModel.Ticket.dateTime = DateTime.Now;
             ticketViewModel.Ticket.EmailAddress = User.Identity.Name;
             ticketViewModel.Ticket.Resolved = false;
 
+            if (User.IsInRole("Institution Manager") || User.IsInRole("Institution manager") || User.IsInRole("Other") || User.IsInRole("Receptionist"))
+            {
+                ticketViewModel.Ticket.InstitutionId = currentUser.InstitutionId;
+            }
 
             await _db.Tickets.AddAsync(ticketViewModel.Ticket);
             await _db.SaveChangesAsync();
+
+            if(User.IsInRole("Admin") || User.IsInRole("Estate Staff"))
+            { 
             return RedirectToAction(nameof(Index));
+            }
+            else if (User.IsInRole("Institution Manager") || User.IsInRole("Institution manager"))
+            {
+                return RedirectToAction(nameof(UserIndex));
+            }
+            return RedirectToAction("Index", "Home", new { area = "Home" });
         }
 
         // GET: Admin/Ticket/Edit/5
@@ -115,6 +145,9 @@ namespace L5A2Programming.Areas.Admin.Controllers
 
             return View(ticketModel);
         }
+
+
+
 
         public async Task<IActionResult> Delete(int id, TicketModel model)
         {
@@ -166,6 +199,10 @@ namespace L5A2Programming.Areas.Admin.Controllers
             return RedirectToAction(nameof(Details), new {id = ticket.Id});
         }
 
+
+
+
+
         [HttpPost]
         public async Task<IActionResult> isResolved(string comment, int id)
         {
@@ -194,7 +231,12 @@ namespace L5A2Programming.Areas.Admin.Controllers
             model.Resolved = true;
             _db.Tickets.Update(model);
             await _db.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+
+            if (User.IsInRole("Admin") || User.IsInRole("Estate Staff"))
+            {
+                return RedirectToAction(nameof(Index));
+            }
+            return RedirectToAction(nameof(UserIndex));
         }
     }
 }

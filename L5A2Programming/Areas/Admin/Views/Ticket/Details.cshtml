@@ -60,9 +60,9 @@
     </dl>
         
 
-    @if(User.IsInRole("Estate Staff") || User.IsInRole("Admin"))
+    @if(User.IsInRole("Estate Staff") || User.IsInRole("Admin") || User.IsInRole("Institution Manager") || User.IsInRole("Institution manager"))
     {
-<div class="container mb-3">
+                <div class="container mb-3">
 
                 <form asp-action="isResolved" method="post">
                 <input type="hidden" value="@Model.Id" name="id"/>
@@ -72,7 +72,7 @@
                 </div>
                 </form>
 
-</div>
+                </div>
 
 }
 

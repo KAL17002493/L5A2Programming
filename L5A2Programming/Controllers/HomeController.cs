@@ -1,32 +1,37 @@
-﻿using L5A2Programming.Models;
+﻿using L5A2Programming.Data;
+using L5A2Programming.Models;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using System.Diagnostics;
+using Microsoft.EntityFrameworkCore;
 
 namespace L5A2Programming.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
+        private readonly ApplicationDbContext _db;
+        private IWebHostEnvironment _webHostEnvironment;
+        private readonly UserManager<CustomUserModel> _userManager;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ApplicationDbContext db, IWebHostEnvironment webHostEnvironment, UserManager<CustomUserModel> userManager)
         {
-            _logger = logger;
+            _webHostEnvironment = webHostEnvironment;
+            _db = db;
+            _userManager = userManager;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
+            var currentUser = await _userManager.GetUserAsync(User);
+
+            if (currentUser == null)
+            {
+                return RedirectToAction("Login", "Account", new { area = "Identity" });
+            }
+            var tickets = _db.Tickets.Where(t => t.Resolved == false && t.EmailAddress == currentUser.Email).Include(t => t.Asset).Include(t => t.Institution).Include(t => t.Room);
+
+            return View(await tickets.ToListAsync());
             return View();
         }
 
-        public IActionResult Privacy()
-        {
-            return View();
-        }
-
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
-        {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
-        }
     }
 }

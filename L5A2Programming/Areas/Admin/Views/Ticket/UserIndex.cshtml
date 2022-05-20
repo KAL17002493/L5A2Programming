@@ -4,16 +4,22 @@
     ViewData["Title"] = "Index";
 }
 
-        @if(Model != null)
-        {
-<h1>Your Open Tickets</h1>
+<h1>Ticket Overview</h1>
 
 <div class="container">
     <div class="row">
         <div class="col">
             <div class="d-grid gap-2">
-            <a class="btn btn-primary" asp-area="Admin" asp-controller="Ticket" asp-action="Create">New Ticket</a>
+            <a class="btn btn-primary" asp-action="Create">New Ticket</a>
             </div>
+        </div>
+        <div class="col">
+            <form method="get">
+                    <div class="input-group">
+                        <input type="text" class="form-control" placeholder="Search by Asset Name" id="search" name="search" value="@ViewData["search"]">
+                        <button class="input-group-text" id="search" type="submit">Search</button>
+                    </div>
+            </form>
         </div>
      </div>
  </div>
@@ -44,16 +50,14 @@
                 <td>@ticket.Asset.AssetName</td>
                 <td>@ticket.Institution.Name</td>
                 <td>
-                    <a class="btn btn-secondary" asp-area="Admin" asp-controller="Ticket" asp-action="Details" asp-route-id="@ticket.Id">View</a>
+                    <a class="btn btn-secondary" asp-controller="Ticket" asp-action="Details" asp-route-id="@ticket.Id">View</a>
+                    @if(User.IsInRole("Admin"))
+                    {
+                    <a class="btn btn-danger" asp-controller="Ticket" asp-action="Delete" asp-route-id="@ticket.Id">Delete</a>
+                    }
             </tr>
-            }
-
+        }
 
 
     </tbody>
 </table>
-        }
-        else
-        {
-            <h1 class="text-center">You have no unresolved tickets!</h1>
-        }

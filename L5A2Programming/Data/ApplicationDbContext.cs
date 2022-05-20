@@ -61,8 +61,8 @@ namespace L5A2Programming.Data
                 new IdentityRole()
                 {
                     Id = "ecfbe7ad-bb6b-49e6-ac2b-6359a73fbf02",
-                    Name = "Institution manager",
-                    NormalizedName = "Institution manager".ToUpper(),
+                    Name = "Institution Manager",
+                    NormalizedName = "Institution Manager".ToUpper(),
                     ConcurrencyStamp = "68144efc-092a-403e-a7fe-3c276de06a72"
 
                 }

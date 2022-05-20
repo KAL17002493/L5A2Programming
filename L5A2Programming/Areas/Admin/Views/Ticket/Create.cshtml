@@ -19,12 +19,14 @@
                 <span asp-validation-for="Ticket.RoomId" class="text-danger"></span>
             </div>
 
-
+                @if(User.IsInRole("Estate Staff") || User.IsInRole("Admin"))
+                {
             <div class="mb-3">
                  <label for="" class="form-label">Institution</label>
                 @Html.DropDownListFor(m => m.Ticket.InstitutionId, Model.Institution, "Select an Institution", new {@class = "form-select"})
                 <span asp-validation-for="Ticket.InstitutionId" class="text-danger"></span>
             </div>
+            }
 
             <div class="mb-3">
               <label for="Ticket.Message" class="form-label">Message</label>

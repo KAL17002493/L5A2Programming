@@ -1,0 +1,56 @@
+﻿@model IEnumerable<AssetModel>
+
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+<h1>User Asset Overview</h1>
+
+ <div class="container">
+    <div class="row">
+        <div class="col">
+        </div>
+        <div class="col">
+            <form method="get">
+                    <div class="input-group">
+                        <input type="text" class="form-control" placeholder="Search by Asset Name" id="search" name="search" value="@ViewData["search"]">
+                        <button class="input-group-text" id="search" type="submit">Search</button>
+                    </div>
+            </form>
+        </div>
+     </div>
+ </div>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Asset Name</th>
+            <th scope="col">Room</th>
+            <th scope="col">Category</th>
+            <th scope="col">Institution</th>
+            <th scope="col">Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+
+        @foreach (var asset in Model)
+        {
+            <tr>
+                <th scope="row">@asset.Id</th>
+                <td>@asset.AssetName</td>
+                <td>@asset.Room.Name</td>
+                <td>@asset.Category.Name</td>
+                <td>@asset.Institution.Name</td>
+
+                <td>
+                    <a class="btn btn-secondary" asp-controller="Asset" asp-action="Update" asp-route-id="@asset.Id">Edit</a>
+                    @*<a class="btn btn-danger" asp-controller="Asset" asp-action="Delete" asp-route-id="@asset.Id">Delete</a>*@
+                </td>
+            </tr>
+        }
+
+
+    </tbody>
+</table>
