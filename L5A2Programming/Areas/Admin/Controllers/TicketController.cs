@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Identity;
 namespace L5A2Programming.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    [Authorize(Roles = "Admin")]
+    [Authorize(Roles = "Admin, Estate Staff")]
     public class TicketController : Controller
     {
         private readonly ApplicationDbContext _db;

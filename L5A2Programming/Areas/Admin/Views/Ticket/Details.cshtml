@@ -59,6 +59,9 @@
 
     </dl>
         
+
+    @if(User.IsInRole("Estate Staff") || User.IsInRole("Admin"))
+    {
 <div class="container mb-3">
 
                 <form asp-action="isResolved" method="post">
@@ -70,6 +73,8 @@
                 </form>
 
 </div>
+
+}
 
 <div class="container">
     <div class="row">

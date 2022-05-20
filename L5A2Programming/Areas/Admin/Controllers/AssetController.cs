@@ -109,11 +109,12 @@ namespace L5A2Programming.Areas.Admin
                 return NotFound();
             }
 
+
+
             if (ModelState.IsValid)
             {
                 try
                 {
-
                     _db.Assets.Update(assetViewModel.Asset);
                     await _db.SaveChangesAsync();
                     return RedirectToAction(nameof(Index));
