@@ -14,6 +14,8 @@ namespace L5A2Programming.Data
         public DbSet<TicketModel> Tickets { get; set; }
         public DbSet<RoomModel> Rooms { get; set; }
 
+        public DbSet<GeneralTicketModel> generalTickets { get; set; }
+
         public DbSet<CommentModel> Comments { get; set; }
 
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)

@@ -30,7 +30,6 @@ namespace L5A2Programming.Controllers
             var tickets = _db.Tickets.Where(t => t.Resolved == false && t.EmailAddress == currentUser.Email).Include(t => t.Asset).Include(t => t.Institution).Include(t => t.Room);
 
             return View(await tickets.ToListAsync());
-            return View();
         }
 
     }

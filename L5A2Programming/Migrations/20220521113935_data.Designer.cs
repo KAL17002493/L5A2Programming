@@ -3,6 +3,7 @@ using System;
 using L5A2Programming.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace L5A2Programming.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220521113935_data")]
+    partial class data
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "6.0.5");
@@ -188,10 +190,10 @@ namespace L5A2Programming.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@ADMIN.COM",
                             NormalizedUserName = "ADMIN@ADMIN.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAEJJdNcGSwVKFe1WrFjVOTxtkLG2IXk2VFKTMljCCxCDVNqH4koEl7KWz2rHVri1eug==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEGFMaJFBAPsDlnHAREsZt8y88tcH96HUMKIbgJLVu7v6rXnbLzz3iG1U1OszyjeARg==",
                             PhoneNumberConfirmed = false,
                             SName = "Admin",
-                            SecurityStamp = "6b30e706-faa5-4ce9-b7eb-c427d2fc4fc3",
+                            SecurityStamp = "8e430ad7-1b4b-4a74-8e1f-9e4809314fc1",
                             TwoFactorEnabled = false,
                             UserName = "admin@admin.com"
                         });

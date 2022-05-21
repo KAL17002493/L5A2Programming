@@ -59,26 +59,26 @@ namespace L5A2Programming.Areas.Admin.Controllers
         // GET: Admin/Ticket/Create
         public IActionResult Create()
         {
-            TicketViewModel ticketViewModel = new TicketViewModel()
-            {
-                Asset = _db.Assets.Select(i => new SelectListItem
+                TicketViewModel ticketViewModel = new TicketViewModel()
                 {
-                    Text = i.AssetName,
-                    Value = i.Id.ToString()
-                }),
+                    Asset = _db.Assets.Select(i => new SelectListItem
+                    {
+                        Text = i.AssetName,
+                        Value = i.Id.ToString()
+                    }),
 
-                Institution = _db.Institutions.Select(i => new SelectListItem
-                {
-                    Text = i.Name,
-                    Value = i.Id.ToString()
-                }),
-                Room = _db.Rooms.Select(i => new SelectListItem
-                {
-                    Text = i.Name,
-                    Value = i.Id.ToString()
-                })
-            };
-            return View(ticketViewModel);
+                    Institution = _db.Institutions.Select(i => new SelectListItem
+                    {
+                        Text = i.Name,
+                        Value = i.Id.ToString()
+                    }),
+                    Room = _db.Rooms.Select(i => new SelectListItem
+                    {
+                        Text = i.Name,
+                        Value = i.Id.ToString()
+                    })
+                };
+                return View(ticketViewModel);
         }
 
         [HttpPost]
@@ -108,6 +108,7 @@ namespace L5A2Programming.Areas.Admin.Controllers
             }
             return RedirectToAction("Index", "Home", new { area = "Home" });
         }
+
 
         // GET: Admin/Ticket/Edit/5
         public async Task<IActionResult> Edit(int? id)

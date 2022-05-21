@@ -3,6 +3,7 @@ using System;
 using L5A2Programming.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace L5A2Programming.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220521113646_Ticket")]
+    partial class Ticket
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "6.0.5");
@@ -72,9 +74,6 @@ namespace L5A2Programming.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<int?>("GeneralTicketModelId")
-                        .HasColumnType("INTEGER");
-
                     b.Property<int>("TicketId")
                         .HasColumnType("INTEGER");
 
@@ -89,8 +88,6 @@ namespace L5A2Programming.Migrations
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("GeneralTicketModelId");
 
                     b.HasIndex("TicketModelId");
 
@@ -188,47 +185,13 @@ namespace L5A2Programming.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@ADMIN.COM",
                             NormalizedUserName = "ADMIN@ADMIN.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAEJJdNcGSwVKFe1WrFjVOTxtkLG2IXk2VFKTMljCCxCDVNqH4koEl7KWz2rHVri1eug==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEH0Y4oiYO6EK/LnNuZDAssetzkZvfJC6kz7qJR6UUXDerkBHP8a1dUVrCs59RJVpLQ==",
                             PhoneNumberConfirmed = false,
                             SName = "Admin",
-                            SecurityStamp = "6b30e706-faa5-4ce9-b7eb-c427d2fc4fc3",
+                            SecurityStamp = "edb859f4-f1fb-4a96-a74e-86c73d992aaa",
                             TwoFactorEnabled = false,
                             UserName = "admin@admin.com"
                         });
-                });
-
-            modelBuilder.Entity("L5A2Programming.Models.GeneralTicketModel", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
-
-                    b.Property<string>("EmailAddress")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.Property<int>("InstitutionId")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<string>("Message")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.Property<bool>("Resolved")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<string>("Type")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.Property<DateTime>("dateTime")
-                        .HasColumnType("TEXT");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("InstitutionId");
-
-                    b.ToTable("generalTickets");
                 });
 
             modelBuilder.Entity("L5A2Programming.Models.InstitutionModel", b =>
@@ -528,10 +491,6 @@ namespace L5A2Programming.Migrations
 
             modelBuilder.Entity("L5A2Programming.Models.CommentModel", b =>
                 {
-                    b.HasOne("L5A2Programming.Models.GeneralTicketModel", null)
-                        .WithMany("Comments")
-                        .HasForeignKey("GeneralTicketModelId");
-
                     b.HasOne("L5A2Programming.Models.TicketModel", null)
                         .WithMany("Comments")
                         .HasForeignKey("TicketModelId");
@@ -546,17 +505,6 @@ namespace L5A2Programming.Migrations
                 });
 
             modelBuilder.Entity("L5A2Programming.Models.CustomUserModel", b =>
-                {
-                    b.HasOne("L5A2Programming.Models.InstitutionModel", "Institution")
-                        .WithMany()
-                        .HasForeignKey("InstitutionId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Institution");
-                });
-
-            modelBuilder.Entity("L5A2Programming.Models.GeneralTicketModel", b =>
                 {
                     b.HasOne("L5A2Programming.Models.InstitutionModel", "Institution")
                         .WithMany()
@@ -654,11 +602,6 @@ namespace L5A2Programming.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("L5A2Programming.Models.GeneralTicketModel", b =>
-                {
-                    b.Navigation("Comments");
                 });
 
             modelBuilder.Entity("L5A2Programming.Models.TicketModel", b =>
