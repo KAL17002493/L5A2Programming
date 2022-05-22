@@ -57,12 +57,22 @@
                             </li>
                         }
 
+                        @if (User.IsInRole("Institution Manager") || User.IsInRole("Institution manager") || User.IsInRole("Admin") || User.IsInRole("Estate Staff") || User.IsInRole("Other"))
+                        {
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="Admin" asp-controller="Asset" asp-action="UserIndex">Assets</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="Admin" asp-controller="Ticket" asp-action="UserIndex">Tickets</a>
-                        </li>
+                        }
+
+                        @if (User.IsInRole("Institution Manager") || User.IsInRole("Institution manager") || User.IsInRole("Admin") || User.IsInRole("Other"))
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="Admin" asp-controller="Ticket" asp-action="UserIndex">Tickets</a>
+                            </li>
+
+                        }
+
+
                     </ul>
                     <partial name="_LoginPartial" />
                 </div>

@@ -89,6 +89,7 @@ namespace L5A2Programming.Areas.Admin.Controllers
             ticketViewModel.Ticket.dateTime = DateTime.Now;
             ticketViewModel.Ticket.EmailAddress = User.Identity.Name;
             ticketViewModel.Ticket.Resolved = false;
+            ticketViewModel.Ticket.Type = "Maintenance";
 
             if (User.IsInRole("Institution Manager") || User.IsInRole("Institution manager") || User.IsInRole("Other") || User.IsInRole("Receptionist"))
             {

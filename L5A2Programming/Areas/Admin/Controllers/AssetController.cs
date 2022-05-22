@@ -40,7 +40,7 @@ namespace L5A2Programming.Areas.Admin
             return View(assets);
 
         }
-        [Authorize(Roles = "Admin, Institution Manager, Institution manager, Other, Receptionist, ")]
+        [Authorize(Roles = "Admin, Institution Manager, Institution manager, Other, Receptionist, Estate Staff")]
         public async Task<IActionResult> UserIndex(string search)
         {
             var currentUser = await _userManager.GetUserAsync(User);
