@@ -188,10 +188,10 @@ namespace L5A2Programming.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@ADMIN.COM",
                             NormalizedUserName = "ADMIN@ADMIN.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAEJJdNcGSwVKFe1WrFjVOTxtkLG2IXk2VFKTMljCCxCDVNqH4koEl7KWz2rHVri1eug==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEGpi0mP1q9CCzUY6ys1G2SHtKmfsrjfN5UwE/cNnWSwF5kQFQ8SL4U6lpxR19h24ag==",
                             PhoneNumberConfirmed = false,
                             SName = "Admin",
-                            SecurityStamp = "6b30e706-faa5-4ce9-b7eb-c427d2fc4fc3",
+                            SecurityStamp = "0178c1e7-dbc3-44d3-8904-1be69b4ec8e0",
                             TwoFactorEnabled = false,
                             UserName = "admin@admin.com"
                         });

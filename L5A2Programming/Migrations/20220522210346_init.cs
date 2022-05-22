@@ -107,6 +107,30 @@ namespace L5A2Programming.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "generalTickets",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    EmailAddress = table.Column<string>(type: "TEXT", nullable: false),
+                    dateTime = table.Column<DateTime>(type: "TEXT", nullable: false),
+                    Type = table.Column<string>(type: "TEXT", nullable: false),
+                    Resolved = table.Column<bool>(type: "INTEGER", nullable: false),
+                    Message = table.Column<string>(type: "TEXT", nullable: false),
+                    InstitutionId = table.Column<int>(type: "INTEGER", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_generalTickets", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_generalTickets_Institutions_InstitutionId",
+                        column: x => x.InstitutionId,
+                        principalTable: "Institutions",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Rooms",
                 columns: table => new
                 {
@@ -253,7 +277,9 @@ namespace L5A2Programming.Migrations
                         .Annotation("Sqlite:Autoincrement", true),
                     EmailAddress = table.Column<string>(type: "TEXT", nullable: false),
                     dateTime = table.Column<DateTime>(type: "TEXT", nullable: false),
+                    Type = table.Column<string>(type: "TEXT", nullable: false),
                     Resolved = table.Column<bool>(type: "INTEGER", nullable: false),
+                    Message = table.Column<string>(type: "TEXT", nullable: false),
                     InstitutionId = table.Column<int>(type: "INTEGER", nullable: false),
                     RoomId = table.Column<int>(type: "INTEGER", nullable: false),
                     AssetId = table.Column<int>(type: "INTEGER", nullable: false)
@@ -291,6 +317,7 @@ namespace L5A2Programming.Migrations
                     Comment = table.Column<string>(type: "TEXT", nullable: false),
                     dateTime = table.Column<DateTime>(type: "TEXT", nullable: false),
                     UserId = table.Column<string>(type: "TEXT", nullable: false),
+                    GeneralTicketModelId = table.Column<int>(type: "INTEGER", nullable: true),
                     TicketModelId = table.Column<int>(type: "INTEGER", nullable: true)
                 },
                 constraints: table =>
@@ -302,6 +329,11 @@ namespace L5A2Programming.Migrations
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Comments_generalTickets_GeneralTicketModelId",
+                        column: x => x.GeneralTicketModelId,
+                        principalTable: "generalTickets",
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_Comments_Tickets_TicketModelId",
                         column: x => x.TicketModelId,
@@ -332,7 +364,7 @@ namespace L5A2Programming.Migrations
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { "ecfbe7ad-bb6b-49e6-ac2b-6359a73fbf02", "68144efc-092a-403e-a7fe-3c276de06a72", "Institution manager", "INSTITUTION MANAGER" });
+                values: new object[] { "ecfbe7ad-bb6b-49e6-ac2b-6359a73fbf02", "68144efc-092a-403e-a7fe-3c276de06a72", "Institution Manager", "INSTITUTION MANAGER" });
 
             migrationBuilder.InsertData(
                 table: "Institutions",
@@ -342,7 +374,7 @@ namespace L5A2Programming.Migrations
             migrationBuilder.InsertData(
                 table: "AspNetUsers",
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "FName", "InstitutionId", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SName", "SecurityStamp", "TwoFactorEnabled", "UserName" },
-                values: new object[] { "143d3180-1104-46f0-8646-62d630056f42", 0, "231728ec-ceef-4de5-8c95-7f82a488cc0d", "admin@admin.com", false, "Admin", 1, false, null, "ADMIN@ADMIN.COM", "ADMIN@ADMIN.COM", "AQAAAAEAACcQAAAAEAhFh4ESjoPHh6HBl1dlqudLFx55Pmxe5SMYxDdVh6Xm0+E8onXqyAnSZ+btwg+nBg==", null, false, "Admin", "f132559d-9f5d-4149-b4b2-ec8d135c47f9", false, "admin@admin.com" });
+                values: new object[] { "143d3180-1104-46f0-8646-62d630056f42", 0, "231728ec-ceef-4de5-8c95-7f82a488cc0d", "admin@admin.com", false, "Admin", 1, false, null, "ADMIN@ADMIN.COM", "ADMIN@ADMIN.COM", "AQAAAAEAACcQAAAAEGpi0mP1q9CCzUY6ys1G2SHtKmfsrjfN5UwE/cNnWSwF5kQFQ8SL4U6lpxR19h24ag==", null, false, "Admin", "0178c1e7-dbc3-44d3-8904-1be69b4ec8e0", false, "admin@admin.com" });
 
             migrationBuilder.InsertData(
                 table: "AspNetUserRoles",
@@ -407,6 +439,11 @@ namespace L5A2Programming.Migrations
                 column: "RoomId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Comments_GeneralTicketModelId",
+                table: "Comments",
+                column: "GeneralTicketModelId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Comments_TicketModelId",
                 table: "Comments",
                 column: "TicketModelId");
@@ -415,6 +452,11 @@ namespace L5A2Programming.Migrations
                 name: "IX_Comments_UserId",
                 table: "Comments",
                 column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_generalTickets_InstitutionId",
+                table: "generalTickets",
+                column: "InstitutionId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Rooms_InstitutionId",
@@ -462,6 +504,9 @@ namespace L5A2Programming.Migrations
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");
+
+            migrationBuilder.DropTable(
+                name: "generalTickets");
 
             migrationBuilder.DropTable(
                 name: "Tickets");

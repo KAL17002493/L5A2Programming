@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace L5A2Programming.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20220519112309_init")]
+    [Migration("20220522210346_init")]
     partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -74,6 +74,9 @@ namespace L5A2Programming.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
+                    b.Property<int?>("GeneralTicketModelId")
+                        .HasColumnType("INTEGER");
+
                     b.Property<int>("TicketId")
                         .HasColumnType("INTEGER");
 
@@ -88,6 +91,8 @@ namespace L5A2Programming.Migrations
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("GeneralTicketModelId");
 
                     b.HasIndex("TicketModelId");
 
@@ -185,13 +190,47 @@ namespace L5A2Programming.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@ADMIN.COM",
                             NormalizedUserName = "ADMIN@ADMIN.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAEAhFh4ESjoPHh6HBl1dlqudLFx55Pmxe5SMYxDdVh6Xm0+E8onXqyAnSZ+btwg+nBg==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEGpi0mP1q9CCzUY6ys1G2SHtKmfsrjfN5UwE/cNnWSwF5kQFQ8SL4U6lpxR19h24ag==",
                             PhoneNumberConfirmed = false,
                             SName = "Admin",
-                            SecurityStamp = "f132559d-9f5d-4149-b4b2-ec8d135c47f9",
+                            SecurityStamp = "0178c1e7-dbc3-44d3-8904-1be69b4ec8e0",
                             TwoFactorEnabled = false,
                             UserName = "admin@admin.com"
                         });
+                });
+
+            modelBuilder.Entity("L5A2Programming.Models.GeneralTicketModel", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("EmailAddress")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<int>("InstitutionId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Message")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<bool>("Resolved")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Type")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime>("dateTime")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("InstitutionId");
+
+                    b.ToTable("generalTickets");
                 });
 
             modelBuilder.Entity("L5A2Programming.Models.InstitutionModel", b =>
@@ -262,11 +301,19 @@ namespace L5A2Programming.Migrations
                     b.Property<int>("InstitutionId")
                         .HasColumnType("INTEGER");
 
+                    b.Property<string>("Message")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
                     b.Property<bool>("Resolved")
                         .HasColumnType("INTEGER");
 
                     b.Property<int>("RoomId")
                         .HasColumnType("INTEGER");
+
+                    b.Property<string>("Type")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
 
                     b.Property<DateTime>("dateTime")
                         .HasColumnType("TEXT");
@@ -319,7 +366,7 @@ namespace L5A2Programming.Migrations
                         {
                             Id = "ecfbe7ad-bb6b-49e6-ac2b-6359a73fbf02",
                             ConcurrencyStamp = "68144efc-092a-403e-a7fe-3c276de06a72",
-                            Name = "Institution manager",
+                            Name = "Institution Manager",
                             NormalizedName = "INSTITUTION MANAGER"
                         },
                         new
@@ -483,6 +530,10 @@ namespace L5A2Programming.Migrations
 
             modelBuilder.Entity("L5A2Programming.Models.CommentModel", b =>
                 {
+                    b.HasOne("L5A2Programming.Models.GeneralTicketModel", null)
+                        .WithMany("Comments")
+                        .HasForeignKey("GeneralTicketModelId");
+
                     b.HasOne("L5A2Programming.Models.TicketModel", null)
                         .WithMany("Comments")
                         .HasForeignKey("TicketModelId");
@@ -497,6 +548,17 @@ namespace L5A2Programming.Migrations
                 });
 
             modelBuilder.Entity("L5A2Programming.Models.CustomUserModel", b =>
+                {
+                    b.HasOne("L5A2Programming.Models.InstitutionModel", "Institution")
+                        .WithMany()
+                        .HasForeignKey("InstitutionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Institution");
+                });
+
+            modelBuilder.Entity("L5A2Programming.Models.GeneralTicketModel", b =>
                 {
                     b.HasOne("L5A2Programming.Models.InstitutionModel", "Institution")
                         .WithMany()
@@ -594,6 +656,11 @@ namespace L5A2Programming.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("L5A2Programming.Models.GeneralTicketModel", b =>
+                {
+                    b.Navigation("Comments");
                 });
 
             modelBuilder.Entity("L5A2Programming.Models.TicketModel", b =>
