@@ -1,4 +1,5 @@
-﻿@model IEnumerable<RoomModel>
+﻿@*Index*@
+@model IEnumerable<RoomModel>
 
 @{
     ViewData["Title"] = "Room Overview";
@@ -6,6 +7,7 @@
 
 <h1>Room Overview</h1>
 
+@*Button takes to create room view*@
  <div class="container">
     <div class="row">
         <div class="col">
@@ -14,16 +16,11 @@
             </div>
         </div>
         <div class="col">
-            @*<form method="get">
-                    <div class="input-group">
-                        <input type="text" class="form-control" placeholder="Search by Room Lable" id="search" name="search" value="@ViewData["search"]">
-                        <button class="input-group-text" id="search" type="submit">Search</button>
-                    </div>
-            </form>*@
         </div>
      </div>
  </div>
 
+ @*Displays all rooms in database*@
 <table class="table table-striped">
     <thead>
         <tr>

@@ -1,4 +1,5 @@
-﻿@model L5A2Programming.Models.AssetViewModel
+﻿@*Create View*@
+@model L5A2Programming.Models.AssetViewModel
 
 <h1>Create</h1>
 
@@ -12,19 +13,21 @@
                 <span asp-validation-for="Asset.AssetName" class="text-danger"></span>
             </div>
 
+            @*Displays list of rooms*@
             <div class="mb-3">
                  <label for="" class="form-label">Room</label>
                 @Html.DropDownListFor(m => m.Asset.RoomId, Model.Room, "Select a Room", new {@class = "form-select"})
                 <span asp-validation-for="Asset.RoomId" class="text-danger"></span>
             </div>
 
+            @*Displays list of categories*@
             <div class="mb-3">
                  <label for="" class="form-label">Category</label>
                 @Html.DropDownListFor(m => m.Asset.CategoryId, Model.Categories, "Select a category", new {@class = "form-select"})
                 <span asp-validation-for="Asset.CategoryId" class="text-danger"></span>
             </div>
 
-            
+            @*Displays list of Institutions*@
             <div class="mb-3">
                  <label for="" class="form-label">Institution</label>
                 @Html.DropDownListFor(m => m.Asset.InstitutionId, Model.Institution, "Select an Institution", new {@class = "form-select"})

@@ -1,4 +1,5 @@
-﻿@using L5A2Programming.Areas.Admin.Models
+﻿@*Index*@
+@using L5A2Programming.Areas.Admin.Models
 @model IEnumerable<UserRolesViewModel>
 
 @{
@@ -14,14 +15,6 @@
  <div class="container">
     <div class="row">
         <div class="col">
-            @*<form method="post" asp-action="AddRole" asp-controller="RolesManager">
-                <div class="input-group">
-                    <input name="roleName" class="form-control" placeholder="Role Name"/>
-                    <span class="input-group-btn">
-                        <button class="btn btn-primary">Add New Role</button>
-                    </span>
-                </div>
-            </form>*@
         </div>
         <div class="col">
 
@@ -54,6 +47,7 @@
         </tr>
     </thead>
     <tbody>
+        @*Displays all existing users with their role and insitutions*@
         @foreach (var user in Model)
         {
             <tr>
@@ -63,9 +57,11 @@
                 <td>@user.User.Institution.Name</td>
                 <td>@string.Join(" , ", user.Roles.ToList())</td>
                 <td>
+                    @*Takes user to role manage view*@
                     <a class="btn btn-secondary" asp-action="Manage" asp-route-id="@user.User.Id">Roles</a>
                 </td>
                 <td>
+                    @*Takes user to insitution manage view*@
                     <a class="btn btn-secondary" asp-action="ManageInstitution" asp-route-id="@user.User.Id">Institution</a>
                 </td>
                  <td>

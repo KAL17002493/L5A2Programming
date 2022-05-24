@@ -1,4 +1,5 @@
-﻿@using L5A2Programming.Areas.Admin.Models
+﻿@*Manage Roles*@
+@using L5A2Programming.Areas.Admin.Models
 @model List<ManageUserRoleViewModel>
 @{
     ViewData["Title"] = "Manage";
@@ -6,10 +7,12 @@
 
 <form method="post">
             <div class="card">
+                @*Displays users name*@
         <div class="card-header">
             <h2>Manage @Model.FirstOrDefault().User.FName 's Roles</h2>
         </div>
 
+        @*Applys a ticket to all active roles*@
         <div class="card-body">
             @for (int i = 0; i < Model.Count; i++)
             {

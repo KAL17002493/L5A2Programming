@@ -1,4 +1,5 @@
-﻿@model L5A2Programming.Models.TicketModel
+﻿@*Details View*@
+@model L5A2Programming.Models.TicketModel
 
 @{
     ViewData["Title"] = "Details";
@@ -59,9 +60,10 @@
 
     </dl>
         
-
+    @*Checks if the user role*@
     @if(User.IsInRole("Estate Staff") || User.IsInRole("Admin") || User.IsInRole("Institution Manager") || User.IsInRole("Institution manager"))
     {
+                @*Displays resolve ticket option if user passes role theck*@
                 <div class="container mb-3">
 
                 <form asp-action="isResolved" method="post">
@@ -83,6 +85,7 @@
                     <a class="btn btn-secondary" asp-action="Index">Back to List</a>
             </div>
         </div>
+        @*Input box for comment creation*@
         <div class="col">
             <form asp-action="AddComment" method="post">
                 <input type="hidden" value="@Model.Id" name="id"/>
@@ -96,10 +99,12 @@
  </div>
 
 </div>
-
+    
+    @*Displays each comment on the ticket*@
     @foreach(var comment in @Model.Comments)
     {
 
+        @*If not resolved comment boxes are yellow*@
     if(Model.Resolved != true)
     {
          <div class="alert alert-warning" role="alert">
@@ -108,6 +113,7 @@
             <p p class="my-1 lh-1 small fst-italic">@comment.dateTime by @comment.User.UserName</p>
         </div>
     }
+    @*If resolved comment boxes are green*@
     else
     {
          <div class="alert alert-success" role="alert">

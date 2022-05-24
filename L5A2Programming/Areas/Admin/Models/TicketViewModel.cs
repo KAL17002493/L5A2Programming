@@ -1,4 +1,5 @@
-﻿using L5A2Programming.Areas.Admin.Models;
+﻿//View model
+using L5A2Programming.Areas.Admin.Models;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace L5A2Programming.Models

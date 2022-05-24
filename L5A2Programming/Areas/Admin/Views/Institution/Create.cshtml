@@ -1,4 +1,5 @@
-﻿@model L5A2Programming.Models.InstitutionModel
+﻿@*Create*@
+@model L5A2Programming.Models.InstitutionModel
 
 @{
     ViewData["Title"] = "Create";
@@ -6,6 +7,7 @@
 
 <h4>Create Institution</h4>
 
+    @*Displays three input fields*@
     <div class="">
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>

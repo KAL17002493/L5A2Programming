@@ -22,6 +22,7 @@ namespace L5A2Programming.Data
         {
         }
 
+        //Runs methods
         protected override void OnModelCreating(ModelBuilder builder)
         {
 
@@ -33,6 +34,7 @@ namespace L5A2Programming.Data
             SeedInstitution(builder);
         }
 
+        //Seeds Insitution
         private void SeedInstitution(ModelBuilder builder)
         {
             builder.Entity<InstitutionModel>().HasData(
@@ -46,6 +48,8 @@ namespace L5A2Programming.Data
                 );
 
         }
+
+        //Seeds Roles
         private void SeedRoles(ModelBuilder builder)
         {
             builder.Entity<IdentityRole>().HasData(
@@ -104,7 +108,7 @@ namespace L5A2Programming.Data
               );
         }
 
-
+        //Seeds user
         private void SeedAdmin(ModelBuilder builder)
         {
             PasswordHasher<CustomUserModel> hasher = new PasswordHasher<CustomUserModel>();
@@ -126,6 +130,7 @@ namespace L5A2Programming.Data
 
         }
 
+        //Seeds admin role to the seeded user
         private void SeedUserRoles(ModelBuilder builder)
         {
             builder.Entity<IdentityUserRole<string>>().HasData(

@@ -26,8 +26,10 @@ namespace L5A2Programming.Areas.Admin.Controllers
         // GET: Admin/Ticket
         public async Task<IActionResult> Index(string search)
         {
+            //retrives all tickets in database
             var tickets = _db.Tickets.Where(t => t.Resolved == false).Include(t => t.Asset).Include(t => t.Institution).Include(t => t.Room);
 
+            //Retrive tickets in database matching the search term
             if (search != null)
             {
                 tickets = _db.Tickets.Where(t => t.Asset.AssetName.ToLower().Contains(search.ToLower())).Include(t => t.Asset).Include(t => t.Institution).Include(t => t.Room);
@@ -44,8 +46,10 @@ namespace L5A2Programming.Areas.Admin.Controllers
         public async Task<IActionResult> UserIndex(string search)
         {
             var currentUser = await _userManager.GetUserAsync(User);
+            //retrives all tickets in database which were belong the to insituiotn from whic the current user is
             var tickets = _db.Tickets.Where(t => t.Resolved == false && t.InstitutionId == currentUser.InstitutionId).Include(t => t.Asset).Include(t => t.Institution).Include(t => t.Room);
 
+            //Retrive tickets in database matching the search term which are from the same institution as the user
             if (search != null)
             {
                 tickets = _db.Tickets.Where(t => t.Asset.AssetName.ToLower().Contains(search.ToLower()) && t.InstitutionId == currentUser.InstitutionId ).Include(t => t.Asset).Include(t => t.Institution).Include(t => t.Room);
@@ -86,19 +90,26 @@ namespace L5A2Programming.Areas.Admin.Controllers
         {
             var currentUser = await _userManager.GetUserAsync(User);
 
+            //Sets time to when ticket was created
             ticketViewModel.Ticket.dateTime = DateTime.Now;
+            //Sets email addres to the user who creats the ticekt
             ticketViewModel.Ticket.EmailAddress = User.Identity.Name;
+            //Detauls resolution state set to false
             ticketViewModel.Ticket.Resolved = false;
+            //Default ticket type set to maintenace
             ticketViewModel.Ticket.Type = "Maintenance";
 
+            //User role check
             if (User.IsInRole("Institution Manager") || User.IsInRole("Institution manager") || User.IsInRole("Other") || User.IsInRole("Receptionist"))
             {
+                //if check passed sets insititution to user institution
                 ticketViewModel.Ticket.InstitutionId = currentUser.InstitutionId;
             }
 
             await _db.Tickets.AddAsync(ticketViewModel.Ticket);
             await _db.SaveChangesAsync();
 
+            //returns user to different page after creating a ticket depeding on their role
             if(User.IsInRole("Admin") || User.IsInRole("Estate Staff"))
             { 
             return RedirectToAction(nameof(Index));
@@ -136,8 +147,9 @@ namespace L5A2Programming.Areas.Admin.Controllers
             {
                 return NotFound();
             }
-
+            //Displays tickets details by Id
             var ticketModel = await _db.Tickets.Include(t => t.Asset).Include(t => t.Institution).Include(t => t.Room).FirstOrDefaultAsync(m => m.Id == id);
+            //Displays comments left on ticket
             ticketModel.Comments = await _db.Comments.Where(t => t.TicketId == ticketModel.Id).Include("User").OrderByDescending(t => t.dateTime).ToListAsync();
 
             if (ticketModel == null)
@@ -175,6 +187,7 @@ namespace L5A2Programming.Areas.Admin.Controllers
           return (_db.Tickets?.Any(e => e.Id == id)).GetValueOrDefault();
         }
 
+        //Creates a new comment on ticket which attacked to ticket as well as records when the comment was created and by whom
         [HttpPost]
         public async Task<IActionResult> AddComment(string comment, int id)
         {
@@ -204,7 +217,7 @@ namespace L5A2Programming.Areas.Admin.Controllers
 
 
 
-
+        //Creates a new comment on ticket which attacked to ticket as well as records when the comment was created and by whom
         [HttpPost]
         public async Task<IActionResult> isResolved(string comment, int id)
         {
@@ -230,10 +243,12 @@ namespace L5A2Programming.Areas.Admin.Controllers
                 return RedirectToAction(nameof(Details), new { id = model.Id });
             }
 
+            //Changes resolved to true, sends data to database
             model.Resolved = true;
             _db.Tickets.Update(model);
             await _db.SaveChangesAsync();
 
+            //redirects user to different page depending on their role
             if (User.IsInRole("Admin") || User.IsInRole("Estate Staff"))
             {
                 return RedirectToAction(nameof(Index));

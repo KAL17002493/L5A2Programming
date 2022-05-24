@@ -16,6 +16,7 @@ namespace L5A2Programming.Areas.Admin.Controllers
             _roleManager = roleManager;
         }
 
+        //Returns all roles
         public async Task<IActionResult> Index()
         {
             var roles = await _roleManager.Roles.ToListAsync();
@@ -23,6 +24,7 @@ namespace L5A2Programming.Areas.Admin.Controllers
             return View(roles);
         }
 
+        //Creates a new identityRole
         [HttpPost]
         public async Task<IActionResult> AddRole(string roleName)
         {
@@ -34,7 +36,7 @@ namespace L5A2Programming.Areas.Admin.Controllers
         }
 
 
-
+        //Deletes a role
         public async Task<IActionResult> DeleteRole(string id)
         {
             if (id != null)

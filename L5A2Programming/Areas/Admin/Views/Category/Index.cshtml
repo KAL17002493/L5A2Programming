@@ -1,10 +1,12 @@
-﻿@model IEnumerable<L5A2Programming.Models.CategoryModel>
+﻿@*Index*@
+@model IEnumerable<L5A2Programming.Models.CategoryModel>
 
 <h1>Category Overview</h1>
 
  <div class="container">
     <div class="row">
         <div class="col">
+            @*Displays inout box and a button*@
         <form method="post" asp-action="Create" asp-controller="Category">
             <div class="input-group">
                 <input name="Name" class="form-control" placeholder="Category Name" />
@@ -15,15 +17,6 @@
         </form>
         </div>
         <div class="col">
-
-        @*<form method="post" asp-action="Create" asp-controller="Category">
-            <div class="input-group">
-                <input name="Name" class="form-control" />
-                <span class="input-group-btn">
-                    <button class="btn btn-primary">Add Category</button>
-                </span>
-            </div>
-        </form>*@
 
         </div>
      </div>

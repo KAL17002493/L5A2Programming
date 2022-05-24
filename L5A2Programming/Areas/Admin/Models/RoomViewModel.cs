@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc.Rendering;
+﻿//Room View model
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace L5A2Programming.Models
 {

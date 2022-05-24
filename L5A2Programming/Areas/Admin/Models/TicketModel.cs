@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿//Maintenace ticket model
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using L5A2Programming.Areas.Admin.Models;
 using L5A2Programming.Models;

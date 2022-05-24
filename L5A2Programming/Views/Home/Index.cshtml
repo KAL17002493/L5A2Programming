@@ -3,7 +3,7 @@
 @{
     ViewData["Title"] = "Index";
 }
-
+@*Checks if model is not empty*@
         @if(Model != null)
         {
 <h1>Your Open Tickets</h1>
@@ -17,7 +17,7 @@
         </div>
      </div>
  </div>
-
+ @*Creates a table of tickets*@
 <table class="table table-striped">
     <thead>
         <tr>
@@ -32,7 +32,6 @@
         </tr>
     </thead>
     <tbody>
-
         @foreach (var ticket in Model)
         {
             <tr>
@@ -44,6 +43,7 @@
                 <td>@ticket.Asset.AssetName</td>
                 <td>@ticket.Institution.Name</td>
                 <td>
+                    @*Takes user to details page*@
                     <a class="btn btn-secondary" asp-area="Admin" asp-controller="Ticket" asp-action="Details" asp-route-id="@ticket.Id">View</a>
             </tr>
             }

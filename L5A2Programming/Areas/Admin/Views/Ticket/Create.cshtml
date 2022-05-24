@@ -1,4 +1,5 @@
-﻿@model L5A2Programming.Models.TicketViewModel
+﻿@*Create View*@
+@model L5A2Programming.Models.TicketViewModel
 
 <h1>Create a ticket</h1>
 
@@ -7,13 +8,14 @@
         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
         <div class="">
 
-
+            @*Displays a list of Assets from download list*@
             <div class="mb-3">
                  <label for="" class="form-label">Asset</label>
                 @Html.DropDownListFor(m => m.Ticket.AssetId, Model.Asset, "Select an asset", new {@class = "form-select"})
                 <span asp-validation-for="Ticket.AssetId" class="text-danger"></span>
             </div>
 
+            @*Displays a list of Rooms from download list*@
             <div class="mb-3">
                  <label for="" class="form-label">Room</label>
                 @Html.DropDownListFor(m => m.Ticket.RoomId, Model.Room, "Select a Room", new {@class = "form-select"})
@@ -24,9 +26,10 @@
 
 
 
-
+                @*Checks if user is admin or estate staff*@
                 @if(User.IsInRole("Estate Staff") || User.IsInRole("Admin"))
                 {
+                    @*Displays a list of Insitutions from download list*@
             <div class="mb-3">
                  <label for="" class="form-label">Institution</label>
                 @Html.DropDownListFor(m => m.Ticket.InstitutionId, Model.Institution, "Select an Institution", new {@class = "form-select"})
@@ -34,11 +37,13 @@
             </div>
             }
 
+            @*Text area*@
             <div class="mb-3">
               <label for="Ticket.Message" class="form-label">Message</label>
               <textarea asp-for="Ticket.Message" class="form-control" id="Ticket.Message" placeholdereadonly="Reason for creating a ticket" rows="3"></textarea>
             </div>
 
+            @*Submit*@
             <div class="mb-3">
                 <button class="btn btn-primary" type="submit">Create Ticket</button>
             </div>

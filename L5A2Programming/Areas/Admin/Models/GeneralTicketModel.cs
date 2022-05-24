@@ -1,4 +1,5 @@
-﻿using L5A2Programming.Models;
+﻿//General ticket model
+using L5A2Programming.Models;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 

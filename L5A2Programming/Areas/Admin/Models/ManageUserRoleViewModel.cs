@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿//Manage user's Roles
+using Microsoft.AspNetCore.Identity;
 using L5A2Programming.Models;
 
 namespace L5A2Programming.Areas.Admin.Models

@@ -1,4 +1,5 @@
-﻿@model L5A2Programming.Models.CategoryModel
+﻿@*Create*@
+@model L5A2Programming.Models.CategoryModel
 
 @{
     ViewData["Title"] = "Create";
@@ -10,6 +11,7 @@
 <hr />
 <div class="row">
     <div class="col-md-4">
+        @*Displays input field*@
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">

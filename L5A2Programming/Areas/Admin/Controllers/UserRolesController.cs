@@ -23,6 +23,7 @@ namespace L5A2Programming.Areas.Admin.Controllers
             _db = db;
         }
 
+        //Outputs a list of users and with inisitutions and roles
         public async Task<IActionResult> Index(string search)
         {
             var users = await _userManager.Users.Include("Institution").ToListAsync();
@@ -47,6 +48,7 @@ namespace L5A2Programming.Areas.Admin.Controllers
             return View(VMlist.ToList());
         }
 
+        //Deletes User
         public async Task<IActionResult> Delete(string id)
         {
             var user = await _userManager.FindByIdAsync(id);
@@ -88,12 +90,15 @@ namespace L5A2Programming.Areas.Admin.Controllers
         [HttpPost]
         public async Task<IActionResult> Manage(List<ManageUserRoleViewModel> model)
         {
+            //Chekcs if model is more than 0
             if (model != null && model.Count >= 1)
             {
+                //gets user
                 var user = await _userManager.FindByIdAsync(model[0].User.Id);
 
                 if (user != null)
                 {
+                    //ges user roles 
                     var roles = await _userManager.GetRolesAsync(user);
                     var result = await _userManager.RemoveFromRolesAsync(user, roles);
 
@@ -103,6 +108,7 @@ namespace L5A2Programming.Areas.Admin.Controllers
                         ModelState.AddModelError("1", "Error Removing Roles.");
                         return View(model);
                     }
+                    //adds role to user
                     result = await _userManager.AddToRolesAsync(user, model.Where(x => x.IsInRole).Select(y => y.Role.Name));
 
                     if (!result.Succeeded)
@@ -154,9 +160,11 @@ namespace L5A2Programming.Areas.Admin.Controllers
         {
             
             if (model != null)
-            {
+            {   
+                //gets user
                 var user = await _userManager.FindByIdAsync(model.User.Id);
             
+                //changes users inistution and saves
                 if(user != null)
                 {
                     user.InstitutionId = model.User.InstitutionId;

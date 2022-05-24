@@ -24,15 +24,17 @@ namespace L5A2Programming.Areas.Admin
         [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Index(string search)
         {
-
+            
             List<AssetModel> assets;
-
+            
             if (search != null)
             {
+                //creates a list of itmes matching the search term
                 assets = await _db.Assets.Where(a => a.AssetName.ToLower().Contains(search.ToLower())).Include("Category").Include("Institution").Include("Room").ToListAsync();
             }
             else 
             {
+                //creates a list of all assets in database 
                 assets = await _db.Assets.Include("Category").Include("Institution").Include("Room").ToListAsync();
             }
 
@@ -49,10 +51,12 @@ namespace L5A2Programming.Areas.Admin
 
             if (search != null)
             {
+                //creates a list of itmes matching the search term but also checks looks for tickets only created by the current user
                 assets = await _db.Assets.Where(a => a.AssetName.ToLower().Contains(search.ToLower()) && a.InstitutionId == currentUser.InstitutionId).Include("Category").Include("Institution").Include("Room").ToListAsync();
             }
             else
             {
+                //creates a list of all assets in database created by the current user
                 assets = await _db.Assets.Where(a => a.InstitutionId == currentUser.InstitutionId).Include("Category").Include("Institution").Include("Room").ToListAsync();
             }
 
@@ -62,6 +66,7 @@ namespace L5A2Programming.Areas.Admin
 
         public IActionResult Create()
         {
+            //Retrives SelecLists when clicking on create button
             AssetViewModel assetViewModel = new AssetViewModel()
             {
                 Categories = _db.Categories.Select(i => new SelectListItem
@@ -84,6 +89,7 @@ namespace L5A2Programming.Areas.Admin
             return View(assetViewModel);
         }
 
+        //Posts data to database
         [HttpPost]
         public async Task<IActionResult> Create(AssetViewModel assetViewModel)
         {
@@ -93,7 +99,7 @@ namespace L5A2Programming.Areas.Admin
         }
 
 
-        //GET
+        //Retrieves all information by the current assets Id
         public async Task<IActionResult> Update(int? id)
         {
             if (id == null)
@@ -121,6 +127,7 @@ namespace L5A2Programming.Areas.Admin
             return View(assetViewModel);
         }
 
+        //GET DOES NOT WORK
         [HttpPost]
         public async Task<IActionResult> Update(int id, AssetViewModel assetViewModel)
         {
@@ -155,7 +162,7 @@ namespace L5A2Programming.Areas.Admin
         }
 
 
-
+        //Deletes asset
         public async Task<IActionResult> Delete(int? id, AssetModel model)
         {
             if (id == null)
